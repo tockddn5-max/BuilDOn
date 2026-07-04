@@ -122,8 +122,8 @@
   }
   .nav-link:hover::after { transform: scaleX(1); }
 
-  .logo-mark { display: inline-flex; flex-direction: column; align-items: flex-start; }
-  .logo-mark .logo-row { display: inline-flex; align-items: center; gap: 8px; }
+  .logo-mark { display: inline-flex; flex-direction: column; align-items: center; }
+  .logo-mark .logo-bolt { margin-bottom: -2px; }
   .logo-mark .logo-word {
     font-family: 'Inter', sans-serif;
     font-weight: 800;
@@ -131,8 +131,7 @@
     line-height: 1;
     color: #11131C;
   }
-  .logo-mark .logo-word .accent { color: #6D28D9; }
-  .logo-mark .logo-underline { margin-top: 5px; width: 100%; background: #6D28D9; border-radius: 2px; }
+  .logo-mark .logo-word .accent { color: #C4B5FD; }
   .logo-mark.on-dark .logo-word { color: #F6F3EC; }
 
   .fade-up { opacity: 0; transform: translateY(16px); transition: opacity 600ms ease-out, transform 600ms ease-out; }
@@ -176,14 +175,8 @@
   <header id="site-header" class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-b border-ink/8">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
       <a href="#top" class="logo-mark">
-        <span class="logo-row">
-          <svg width="20" height="22" viewBox="0 0 30 32" fill="none" aria-hidden="true">
-            <polygon points="10,0 18,0 12,32 4,32" fill="#6D28D9"/>
-            <polygon points="17,9 25,9 19,32 11,32" fill="#A78BFA"/>
-          </svg>
-          <span class="logo-word" style="font-size:23px;">Build<span class="accent">On</span></span>
-        </span>
-        <span class="logo-underline" style="height:3px;"></span>
+        <svg class="logo-bolt" width="14" height="24" viewBox="0 0 20 34" fill="none" aria-hidden="true"><path d="M12 1L2 19H10L7 33L19 13H10L12 1Z" fill="#6D28D9"/></svg>
+        <span class="logo-word" style="font-size:23px;">Buil<span class="accent">DOn</span></span>
       </a>
 
       <nav class="hidden md:flex items-center gap-9 text-sm text-ink/70">
@@ -836,15 +829,9 @@
   <footer class="bg-white border-t border-ink/8">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
       <div>
-        <a href="#top" class="logo-mark">
-          <span class="logo-row">
-            <svg width="16" height="18" viewBox="0 0 30 32" fill="none" aria-hidden="true">
-              <polygon points="10,0 18,0 12,32 4,32" fill="#6D28D9"/>
-              <polygon points="17,9 25,9 19,32 11,32" fill="#A78BFA"/>
-            </svg>
-            <span class="logo-word" style="font-size:19px;">Build<span class="accent">On</span></span>
-          </span>
-          <span class="logo-underline" style="height:2px;"></span>
+        <a href="#top" class="logo-mark" style="align-items: flex-start;">
+          <svg class="logo-bolt" width="11" height="19" viewBox="0 0 20 34" fill="none" aria-hidden="true"><path d="M12 1L2 19H10L7 33L19 13H10L12 1Z" fill="#6D28D9"/></svg>
+          <span class="logo-word" style="font-size:19px;">Buil<span class="accent">DOn</span></span>
         </a>
         <p class="text-ink/60 text-sm mt-2 max-w-xs">브랜드의 첫인상을 완성하는 홈페이지 제작 파트너</p>
       </div>

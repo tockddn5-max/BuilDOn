@@ -62,8 +62,8 @@
 
   .status-pill { transition: background-color 150ms, color 150ms; }
 
-  .logo-mark { display: inline-flex; flex-direction: column; align-items: flex-start; }
-  .logo-mark .logo-row { display: inline-flex; align-items: center; gap: 8px; }
+  .logo-mark { display: inline-flex; flex-direction: column; align-items: center; }
+  .logo-mark .logo-bolt { margin-bottom: -2px; }
   .logo-mark .logo-word {
     font-family: 'Inter', sans-serif;
     font-weight: 800;
@@ -71,8 +71,7 @@
     line-height: 1;
     color: #F6F3EC;
   }
-  .logo-mark .logo-word .accent { color: #A78BFA; }
-  .logo-mark .logo-underline { margin-top: 5px; width: 100%; background: #6D28D9; border-radius: 2px; }
+  .logo-mark .logo-word .accent { color: #C4B5FD; }
 </style>
 </head>
 <body class="font-sans text-cream antialiased min-h-screen">
@@ -82,14 +81,8 @@
     <form id="login-form" class="w-full max-w-sm bg-inkSoft border border-inkLine rounded-2xl p-8">
       <h1 class="font-display text-2xl mb-1 flex items-center gap-2">
         <span class="logo-mark">
-          <span class="logo-row">
-            <svg width="20" height="22" viewBox="0 0 30 32" fill="none" aria-hidden="true">
-              <polygon points="10,0 18,0 12,32 4,32" fill="#6D28D9"/>
-              <polygon points="17,9 25,9 19,32 11,32" fill="#A78BFA"/>
-            </svg>
-            <span class="logo-word" style="font-size:23px;">Build<span class="accent">On</span></span>
-          </span>
-          <span class="logo-underline" style="height:3px;"></span>
+          <svg class="logo-bolt" width="14" height="24" viewBox="0 0 20 34" fill="none" aria-hidden="true"><path d="M12 1L2 19H10L7 33L19 13H10L12 1Z" fill="#6D28D9"/></svg>
+          <span class="logo-word" style="font-size:23px;">Buil<span class="accent">DOn</span></span>
         </span>
         관리자
       </h1>

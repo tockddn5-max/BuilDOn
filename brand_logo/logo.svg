@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 74" width="230" height="74">
-  <polygon points="10,6 18,6 12,38 4,38" fill="#6D28D9"/>
-  <polygon points="17,15 25,15 19,38 11,38" fill="#A78BFA"/>
-  <text x="44" y="34" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="34" letter-spacing="-0.5">
-    <tspan fill="#11131C">Build</tspan><tspan fill="#6D28D9">On</tspan>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 96" width="140" height="96">
+  <g transform="translate(48,6) scale(1.1)">
+    <path d="M12 1L2 19H10L7 33L19 13H10L12 1Z" fill="#6D28D9"/>
+  </g>
+  <text x="8" y="82" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="36" letter-spacing="-0.5">
+    <tspan fill="#11131C">Buil</tspan><tspan fill="#C4B5FD">DOn</tspan>
   </text>
-  <rect x="0" y="46" width="210" height="4" rx="2" fill="#6D28D9"/>
 </svg>
