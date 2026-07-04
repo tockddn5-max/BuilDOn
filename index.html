@@ -8,8 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/variable/pretendardvariable.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -26,8 +28,8 @@
           mint: { DEFAULT: '#33D6A6', dark: '#22B78D' },
         },
         fontFamily: {
-          display: ['"Playfair Display"', 'serif'],
-          sans: ['Inter', 'sans-serif'],
+          display: ['"Playfair Display"', '"Pretendard Variable"', 'serif'],
+          sans: ['"Pretendard Variable"', 'Inter', 'sans-serif'],
         },
         boxShadow: {
           violet: '0 20px 40px -14px rgba(109,40,217,0.45), 0 8px 20px -10px rgba(17,19,28,0.5)',
@@ -166,6 +168,11 @@
   details > summary::-webkit-details-marker { display: none; }
   details .faq-chevron { transition: transform 200ms ease-out; }
   details[open] .faq-chevron { transform: rotate(180deg); }
+
+  .service-card { transition: transform 220ms ease-out, box-shadow 220ms ease-out; }
+  .service-card:hover { transform: scale(1.045); }
+  .service-card:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(109,40,217,0.4); }
+  .service-card:active { transform: scale(1.01); }
 </style>
 </head>
 <body class="font-sans text-ink antialiased">
@@ -175,7 +182,7 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
       <a href="#top" class="logo-mark">
         <svg class="logo-bolt" width="14" height="24" viewBox="0 0 20 34" fill="none" aria-hidden="true"><path d="M12 1L2 19H10L7 33L19 13H10L12 1Z" fill="#6D28D9"/></svg>
-        <span class="logo-word" style="font-size:23px;">Buil<span class="accent">DOn</span></span>
+        <span class="logo-word" style="font-size:23px;">Build<span class="accent">On</span></span>
       </a>
 
       <nav class="hidden md:flex items-center gap-9 text-sm text-ink/70">
@@ -339,60 +346,6 @@
           <p class="text-xs text-ink/50 mb-3">상담 응답</p>
           <p class="font-display text-3xl sm:text-4xl text-ink"><span data-countup data-target="24">0</span><span class="text-mint-dark">시간 이내</span></p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== OUR SERVICE ===================== -->
-  <section id="services" class="bg-white py-24 sm:py-32">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-      <div class="text-center mb-16">
-        <p class="text-ink/50 text-sm">저가형부터 프리미엄 맞춤형까지, BuildOn이 함께합니다</p>
-        <h2 class="font-display text-3xl sm:text-4xl mt-3 inline-flex items-center gap-2">
-          Our Service <span class="w-2 h-2 rounded-full bg-violet inline-block"></span>
-        </h2>
-        <p class="text-ink/60 text-sm sm:text-base mt-4">예산과 목적에 맞는 세 가지 제작 방식 중에서 선택하세요</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
-        <article class="relative bg-white rounded-2xl shadow-card border border-ink/8 p-8 overflow-hidden">
-          <p class="text-xs tracking-[0.2em] uppercase text-violet font-medium mb-4">Starter</p>
-          <h3 class="font-display text-2xl mb-2">저가형</h3>
-          <p class="text-sm text-ink/60 leading-relaxed">1인기업·소규모 브랜드를 위한 원페이지/랜딩페이지 제작</p>
-          <div class="flex items-baseline gap-1 mt-6 mb-2">
-            <span class="text-violet font-semibold text-xl">300,000원</span><span class="text-ink/50 text-sm">~ · 3~5일</span>
-          </div>
-          <a href="#contact" class="inline-flex items-center gap-1 text-sm font-medium text-ink mt-4 hover:text-violet transition-colors duration-200">
-            자세히보기 <span aria-hidden="true">→</span>
-          </a>
-          <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-violet/10" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-        </article>
-
-        <article class="relative bg-white rounded-2xl shadow-card border border-ink/8 p-8 overflow-hidden">
-          <p class="text-xs tracking-[0.2em] uppercase text-mint-dark font-medium mb-4">Standard</p>
-          <h3 class="font-display text-2xl mb-2">스탠다드</h3>
-          <p class="text-sm text-ink/60 leading-relaxed">멀티페이지 브랜드사이트, 예약·문의 폼 연동까지 갖춘 제작</p>
-          <div class="flex items-baseline gap-1 mt-6 mb-2">
-            <span class="text-violet font-semibold text-xl">800,000원</span><span class="text-ink/50 text-sm">~ · 1~2주</span>
-          </div>
-          <a href="#contact" class="inline-flex items-center gap-1 text-sm font-medium text-ink mt-4 hover:text-violet transition-colors duration-200">
-            자세히보기 <span aria-hidden="true">→</span>
-          </a>
-          <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-mint/10" viewBox="0 0 24 24" fill="currentColor"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
-        </article>
-
-        <article class="relative bg-ink rounded-2xl shadow-card p-8 overflow-hidden">
-          <p class="text-xs tracking-[0.2em] uppercase text-mint font-medium mb-4">Premium</p>
-          <h3 class="font-display text-2xl mb-2 text-cream">프리미엄</h3>
-          <p class="text-sm text-creamMuted leading-relaxed">완전 맞춤 디자인, 이커머스·관리자 페이지까지 포함하는 풀커스텀 제작</p>
-          <div class="flex items-baseline gap-1 mt-6 mb-2">
-            <span class="text-mint font-semibold text-xl">협의 후 견적</span><span class="text-creamMuted text-sm">· 3~4주+</span>
-          </div>
-          <a href="#contact" class="inline-flex items-center gap-1 text-sm font-medium text-cream mt-4 hover:text-mint transition-colors duration-200">
-            자세히보기 <span aria-hidden="true">→</span>
-          </a>
-          <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-cream/10" viewBox="0 0 24 24" fill="currentColor"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" /></svg>
-        </article>
       </div>
     </div>
   </section>
@@ -722,6 +675,60 @@
     </div>
   </section>
 
+  <!-- ===================== OUR SERVICE ===================== -->
+  <section id="services" class="bg-white py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-16">
+        <p class="text-ink/50 text-sm">저가형부터 프리미엄 맞춤형까지, BuildOn이 함께합니다</p>
+        <h2 class="font-display text-3xl sm:text-4xl mt-3 inline-flex items-center gap-2">
+          Our Service <span class="w-2 h-2 rounded-full bg-violet inline-block"></span>
+        </h2>
+        <p class="text-ink/60 text-sm sm:text-base mt-4">예산과 목적에 맞는 세 가지 제작 방식 중에서 선택하세요 — 카드를 클릭하면 바로 상담 신청으로 이동합니다</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
+        <a href="#contact" class="service-card relative block bg-white rounded-2xl shadow-card border border-ink/8 p-8 overflow-hidden">
+          <p class="text-xs tracking-[0.2em] uppercase text-violet font-medium mb-4">Starter</p>
+          <h3 class="font-display text-2xl mb-2">저가형</h3>
+          <p class="text-sm text-ink/60 leading-relaxed">1인기업·소규모 브랜드를 위한 원페이지/랜딩페이지 제작</p>
+          <div class="flex items-baseline gap-1 mt-6 mb-2">
+            <span class="text-violet font-semibold text-xl">300,000원</span><span class="text-ink/50 text-sm">~ · 3~5일</span>
+          </div>
+          <span class="inline-flex items-center gap-1 text-sm font-medium text-ink mt-4">
+            자세히보기 <span aria-hidden="true">→</span>
+          </span>
+          <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-violet/10" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        </a>
+
+        <a href="#contact" class="service-card relative block bg-white rounded-2xl shadow-card border border-ink/8 p-8 overflow-hidden">
+          <p class="text-xs tracking-[0.2em] uppercase text-mint-dark font-medium mb-4">Standard</p>
+          <h3 class="font-display text-2xl mb-2">스탠다드</h3>
+          <p class="text-sm text-ink/60 leading-relaxed">멀티페이지 브랜드사이트, 예약·문의 폼 연동까지 갖춘 제작</p>
+          <div class="flex items-baseline gap-1 mt-6 mb-2">
+            <span class="text-violet font-semibold text-xl">800,000원</span><span class="text-ink/50 text-sm">~ · 1~2주</span>
+          </div>
+          <span class="inline-flex items-center gap-1 text-sm font-medium text-ink mt-4">
+            자세히보기 <span aria-hidden="true">→</span>
+          </span>
+          <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-mint/10" viewBox="0 0 24 24" fill="currentColor"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+        </a>
+
+        <a href="#contact" class="service-card relative block bg-ink rounded-2xl shadow-card p-8 overflow-hidden">
+          <p class="text-xs tracking-[0.2em] uppercase text-mint font-medium mb-4">Premium</p>
+          <h3 class="font-display text-2xl mb-2 text-cream">프리미엄</h3>
+          <p class="text-sm text-creamMuted leading-relaxed">완전 맞춤 디자인, 이커머스·관리자 페이지까지 포함하는 풀커스텀 제작</p>
+          <div class="flex items-baseline gap-1 mt-6 mb-2">
+            <span class="text-mint font-semibold text-xl">협의 후 견적</span><span class="text-creamMuted text-sm">· 3~4주+</span>
+          </div>
+          <span class="inline-flex items-center gap-1 text-sm font-medium text-cream mt-4">
+            자세히보기 <span aria-hidden="true">→</span>
+          </span>
+          <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-cream/10" viewBox="0 0 24 24" fill="currentColor"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== FAQ ===================== -->
   <section id="faq" class="bg-mist py-24 sm:py-32">
     <div class="max-w-4xl mx-auto px-6 lg:px-10">
@@ -830,7 +837,7 @@
       <div>
         <a href="#top" class="logo-mark">
           <svg width="11" height="19" viewBox="0 0 20 34" fill="none" aria-hidden="true"><path d="M12 1L2 19H10L7 33L19 13H10L12 1Z" fill="#6D28D9"/></svg>
-          <span class="logo-word" style="font-size:19px;">Buil<span class="accent">DOn</span></span>
+          <span class="logo-word" style="font-size:19px;">Build<span class="accent">On</span></span>
         </a>
         <p class="text-ink/60 text-sm mt-2 max-w-xs">브랜드의 첫인상을 완성하는 홈페이지 제작 파트너</p>
       </div>
@@ -863,6 +870,20 @@
       history.replaceState(null, '', window.location.pathname + window.location.search);
     }
     window.scrollTo(0, 0);
+
+    // smooth scroll (Lenis) — 모션 감소 설정 시 네이티브 스크롤 유지
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof Lenis !== 'undefined') {
+      const lenis = new Lenis({
+        duration: 0.9,
+        easing: (t) => 1 - Math.pow(1 - t, 3),
+        smoothWheel: true,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    }
 
     // mobile menu
     const menuToggle = document.getElementById('menu-toggle');
