@@ -1,6 +1,9 @@
 {
   "name": "buildon",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "resend": "^4.0.0"
   }
