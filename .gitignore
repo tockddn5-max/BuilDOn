@@ -1,5 +1,56 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Dependencies
 node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Vercel
+.vercel/
+
+# Env files
 .env
 .env.*
-.vercel
-.claude/
+!.env.example
+
+# Logs / temp
+*.log
+*.tmp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime cache — local paths / UUIDs, do not track
+cache/
+
+# Task data — private working data, keep folder only
+tasks/*
+!tasks/.gitkeep
+
+# Local learnings — private accumulated notes, keep folder only
+_local/*
+!_local/.gitkeep
+
+# Claude local settings
+.claude/settings.local.json
+
+# Obsidian local app settings
+옵시디언/
