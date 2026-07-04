@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildOn 관리자</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#11131C',
+          inkSoft: '#171A26',
+          inkLine: 'rgba(246,243,236,0.12)',
+          cream: '#F6F3EC',
+          creamMuted: '#B7BACB',
+          violet: { DEFAULT: '#6C5CE0', dark: '#5546C4' },
+          mint: { DEFAULT: '#33D6A6', dark: '#22B78D' },
+        },
+        fontFamily: {
+          display: ['"Playfair Display"', 'serif'],
+          sans: ['Inter', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  body { background-color: #11131C; }
+  .btn-primary {
+    background-color: #6C5CE0; color: #F6F3EC;
+    transition-property: transform, opacity, background-color;
+    transition-duration: 200ms;
+  }
+  .btn-primary:hover { background-color: #5546C4; transform: scale(1.02); }
+  .btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(108,92,224,0.5); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .btn-ghost {
+    background-color: rgba(246,243,236,0.06); color: #F6F3EC;
+    border: 1px solid rgba(246,243,236,0.16);
+    transition-property: transform, opacity, background-color, border-color;
+    transition-duration: 200ms;
+  }
+  .btn-ghost:hover { background-color: rgba(246,243,236,0.12); border-color: rgba(246,243,236,0.35); }
+  .btn-ghost:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(51,214,166,0.4); }
+  .btn-ghost:active { transform: scale(0.97); }
+
+  .field {
+    background-color: rgba(246,243,236,0.05); border: 1px solid rgba(246,243,236,0.18); color: #F6F3EC;
+    transition: border-color 150ms, box-shadow 150ms;
+  }
+  .field::placeholder { color: #7C8091; }
+  .field:focus { outline: none; border-color: #33D6A6; box-shadow: 0 0 0 3px rgba(51,214,166,0.2); }
+
+  .status-pill { transition: background-color 150ms, color 150ms; }
+</style>
+</head>
+<body class="font-sans text-cream antialiased min-h-screen">
+
+  <!-- ===================== LOGIN VIEW ===================== -->
+  <div id="login-view" class="min-h-screen flex items-center justify-center px-6">
+    <form id="login-form" class="w-full max-w-sm bg-inkSoft border border-inkLine rounded-2xl p-8">
+      <h1 class="font-display text-2xl mb-1">Build<span class="text-mint">On</span> 관리자</h1>
+      <p class="text-creamMuted text-sm mb-8">관리자 계정으로 로그인해주세요</p>
+
+      <div class="space-y-4">
+        <div>
+          <label for="login-email" class="block text-cream/80 text-sm mb-2">이메일</label>
+          <input id="login-email" type="email" required class="field w-full rounded-lg px-4 py-3 text-sm" placeholder="admin@buildon.com">
+        </div>
+        <div>
+          <label for="login-password" class="block text-cream/80 text-sm mb-2">비밀번호</label>
+          <input id="login-password" type="password" required class="field w-full rounded-lg px-4 py-3 text-sm" placeholder="••••••••">
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary w-full rounded-full px-6 py-3 text-sm font-medium mt-6">로그인</button>
+      <p id="login-error" class="hidden text-rose-300 text-sm mt-4">이메일 또는 비밀번호가 올바르지 않습니다.</p>
+    </form>
+  </div>
+
+  <!-- ===================== DASHBOARD VIEW ===================== -->
+  <div id="dashboard-view" class="hidden max-w-6xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="font-display text-2xl">상담 신청 관리</h1>
+        <p class="text-creamMuted text-sm mt-1">총 <span id="total-count">0</span>건 · 대기중 <span id="pending-count">0</span>건</p>
+      </div>
+      <button id="logout-btn" class="btn-ghost rounded-full px-5 py-2.5 text-sm">로그아웃</button>
+    </div>
+
+    <div class="bg-inkSoft border border-inkLine rounded-2xl overflow-hidden">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left text-creamMuted border-b border-inkLine">
+            <th class="px-5 py-4 font-medium">이름</th>
+            <th class="px-5 py-4 font-medium">연락처</th>
+            <th class="px-5 py-4 font-medium">이메일</th>
+            <th class="px-5 py-4 font-medium">문의 내용</th>
+            <th class="px-5 py-4 font-medium">접수일</th>
+            <th class="px-5 py-4 font-medium">상태</th>
+          </tr>
+        </thead>
+        <tbody id="rows-body"></tbody>
+      </table>
+      <p id="empty-state" class="hidden text-creamMuted text-sm text-center py-12">아직 접수된 문의가 없습니다.</p>
+    </div>
+  </div>
+
+  <script>
+    // 보안 안내: 이 관리자 페이지의 실제 보호 장치는 Supabase Auth + RLS 정책입니다.
+    // 파일명을 추측하기 어렵게 지은 것은 부가적인 방어일 뿐, 그 자체가 보안이 아닙니다.
+    const SUPABASE_URL = 'https://qbcymytrarkgrukkafab.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_dQ-a4sXaC8VyXT8UtxRY3g_gJDBlBuA';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    const loginView = document.getElementById('login-view');
+    const dashboardView = document.getElementById('dashboard-view');
+    const loginForm = document.getElementById('login-form');
+    const loginError = document.getElementById('login-error');
+    const logoutBtn = document.getElementById('logout-btn');
+    const rowsBody = document.getElementById('rows-body');
+    const emptyState = document.getElementById('empty-state');
+    const totalCountEl = document.getElementById('total-count');
+    const pendingCountEl = document.getElementById('pending-count');
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      return d.toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    }
+
+    function renderRows(rows) {
+      rowsBody.innerHTML = '';
+      emptyState.classList.toggle('hidden', rows.length > 0);
+      totalCountEl.textContent = rows.length;
+      pendingCountEl.textContent = rows.filter(r => r.status === 'pending').length;
+
+      rows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.className = 'border-b border-inkLine last:border-0 align-top';
+        const isPending = row.status === 'pending';
+        tr.innerHTML = `
+          <td class="px-5 py-4">${escapeHtml(row.name)}</td>
+          <td class="px-5 py-4">${escapeHtml(row.phone)}</td>
+          <td class="px-5 py-4">${escapeHtml(row.email)}</td>
+          <td class="px-5 py-4 max-w-xs text-creamMuted">${escapeHtml(row.message)}</td>
+          <td class="px-5 py-4 text-creamMuted whitespace-nowrap">${formatDate(row.created_at)}</td>
+          <td class="px-5 py-4">
+            <button
+              class="status-pill rounded-full px-3 py-1.5 text-xs font-medium ${isPending ? 'bg-violet/20 text-violet' : 'bg-mint/20 text-mint'}"
+              data-id="${row.id}" data-status="${row.status}">
+              ${isPending ? '대기중' : '완료'}
+            </button>
+          </td>
+        `;
+        rowsBody.appendChild(tr);
+      });
+
+      rowsBody.querySelectorAll('button[data-id]').forEach(btn => {
+        btn.addEventListener('click', () => toggleStatus(btn));
+      });
+    }
+
+    async function toggleStatus(btn) {
+      const id = btn.dataset.id;
+      const nextStatus = btn.dataset.status === 'pending' ? 'done' : 'pending';
+      btn.disabled = true;
+      const { data, error } = await supabaseClient
+        .from('consultations')
+        .update({ status: nextStatus })
+        .eq('id', id)
+        .select();
+
+      if (error || !data || data.length === 0) {
+        console.error(error || 'update blocked (0 rows affected)');
+        btn.disabled = false;
+        alert('상태 변경에 실패했습니다.');
+        return;
+      }
+      await loadConsultations();
+    }
+
+    async function loadConsultations() {
+      const { data, error } = await supabaseClient
+        .from('consultations')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+      renderRows(data || []);
+    }
+
+    function showDashboard() {
+      loginView.classList.add('hidden');
+      dashboardView.classList.remove('hidden');
+      loadConsultations();
+    }
+
+    function showLogin() {
+      dashboardView.classList.add('hidden');
+      loginView.classList.remove('hidden');
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loginError.classList.add('hidden');
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) {
+        loginError.classList.remove('hidden');
+        return;
+      }
+      showDashboard();
+    });
+
+    logoutBtn.addEventListener('click', async () => {
+      await supabaseClient.auth.signOut();
+      showLogin();
+    });
+
+    (async () => {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        showDashboard();
+      } else {
+        showLogin();
+      }
+    })();
+  </script>
+</body>
+</html>
