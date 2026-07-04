@@ -77,19 +77,6 @@
   .btn-ghost-dark:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(51,214,166,0.4); }
   .btn-ghost-dark:active { transform: scale(0.98); }
 
-  .tab-btn {
-    color: #7C8091;
-    transition-property: color, transform, opacity;
-    transition-duration: 150ms;
-  }
-  .tab-btn:hover { color: #11131C; }
-  .tab-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(108,92,224,0.35); border-radius: 4px; }
-  .tab-btn.active { color: #11131C; }
-  .tab-btn.active .tab-underline { transform: scaleX(1); opacity: 1; }
-  .tab-underline { transform: scaleX(0); opacity: 0; transition: transform 200ms ease-out, opacity 200ms ease-out; }
-
-  .pkg-card { transition-property: transform, box-shadow; transition-duration: 220ms; transition-timing-function: ease-out; }
-  .pkg-card:hover { transform: translateY(-6px); }
 
   .field {
     background-color: rgba(246,243,236,0.05);
@@ -125,9 +112,6 @@
   .logo-mark .logo-word .accent { color: #6C5CE0; }
   .logo-mark .logo-underline { margin-top: 4px; width: 76%; background: #6C5CE0; border-radius: 2px; }
 
-  [data-tab-panel] { display: none !important; }
-  [data-tab-panel].active { display: grid !important; }
-
   .fade-up { opacity: 0; transform: translateY(16px); transition: opacity 600ms ease-out, transform 600ms ease-out; }
   .fade-up.in-view { opacity: 1; transform: translateY(0); }
 </style>
@@ -147,7 +131,7 @@
 
       <nav class="hidden md:flex items-center gap-10 text-sm text-cream/85">
         <a href="#services" class="nav-link">서비스</a>
-        <a href="#portfolio" class="nav-link">진행 방식</a>
+        <a href="#portfolio" class="nav-link">포트폴리오</a>
         <a href="#testimonials" class="nav-link">고객 후기</a>
         <a href="#contact" class="nav-link">문의</a>
       </nav>
@@ -174,7 +158,7 @@
     <!-- mobile menu -->
     <div id="mobile-menu" class="md:hidden hidden bg-ink border-t border-inkLine px-6 py-8 flex flex-col gap-6 text-cream">
       <a href="#services" class="text-lg">서비스</a>
-      <a href="#portfolio" class="text-lg">진행 방식</a>
+      <a href="#portfolio" class="text-lg">포트폴리오</a>
       <a href="#testimonials" class="text-lg">고객 후기</a>
       <a href="#contact" class="text-lg">문의</a>
       <a href="#contact">
@@ -231,153 +215,119 @@
     </div>
   </section>
 
-  <!-- ===================== SERVICES / PRICING ===================== -->
+  <!-- ===================== OUR SERVICE ===================== -->
   <section id="services" class="bg-cream py-24 sm:py-32">
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
-      <div class="text-center mb-14">
-        <p class="text-violet text-xs tracking-[0.25em] uppercase font-medium mb-4">Services</p>
-        <h2 class="font-display text-3xl sm:text-4xl">필요에 맞게 고르는 제작 요금제</h2>
+      <div class="text-center mb-16">
+        <p class="text-ink/50 text-sm">저가형부터 프리미엄 맞춤형까지, BuildOn이 함께합니다</p>
+        <h2 class="font-display text-3xl sm:text-4xl mt-3 inline-flex items-center gap-2">
+          Our Service <span class="w-2 h-2 rounded-full bg-violet inline-block"></span>
+        </h2>
+        <p class="text-ink/60 text-sm sm:text-base mt-4">예산과 목적에 맞는 세 가지 제작 방식 중에서 선택하세요</p>
       </div>
 
-      <div class="flex items-center justify-center gap-8 sm:gap-12 border-b border-ink/10 mb-14 text-base sm:text-lg font-display">
-        <button class="tab-btn active pb-4" data-tab-btn="starter">
-          <u class="no-underline">저가형</u>
-          <span class="tab-underline block h-[2px] bg-ink mt-2"></span>
-        </button>
-        <button class="tab-btn pb-4" data-tab-btn="standard">
-          스탠다드
-          <span class="tab-underline block h-[2px] bg-ink mt-2"></span>
-        </button>
-        <button class="tab-btn pb-4" data-tab-btn="premium">
-          프리미엄
-          <span class="tab-underline block h-[2px] bg-ink mt-2"></span>
-        </button>
-      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
+        <article class="relative bg-white rounded-2xl shadow-card p-8 overflow-hidden">
+          <p class="text-xs tracking-[0.2em] uppercase text-violet font-medium mb-4">Starter</p>
+          <h3 class="font-display text-2xl mb-2">저가형</h3>
+          <p class="text-sm text-ink/60 leading-relaxed">1인기업·소규모 브랜드를 위한 원페이지/랜딩페이지 제작</p>
+          <div class="flex items-baseline gap-1 mt-6 mb-2">
+            <span class="text-violet font-semibold text-xl">300,000원</span><span class="text-ink/50 text-sm">~ · 3~5일</span>
+          </div>
+          <a href="#contact" class="inline-flex items-center gap-1 text-sm font-medium text-ink mt-4 hover:text-violet transition-colors duration-200">
+            자세히보기 <span aria-hidden="true">→</span>
+          </a>
+          <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-violet/10" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        </article>
 
-      <!-- 저가형 -->
-      <div data-tab-panel="starter" class="active grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <article class="pkg-card bg-white rounded-2xl overflow-hidden shadow-card">
-          <div class="h-44 flex items-center justify-center bg-gradient-to-br from-violet/[0.09] to-cream">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        <article class="relative bg-white rounded-2xl shadow-card p-8 overflow-hidden">
+          <p class="text-xs tracking-[0.2em] uppercase text-mint-dark font-medium mb-4">Standard</p>
+          <h3 class="font-display text-2xl mb-2">스탠다드</h3>
+          <p class="text-sm text-ink/60 leading-relaxed">멀티페이지 브랜드사이트, 예약·문의 폼 연동까지 갖춘 제작</p>
+          <div class="flex items-baseline gap-1 mt-6 mb-2">
+            <span class="text-violet font-semibold text-xl">800,000원</span><span class="text-ink/50 text-sm">~ · 1~2주</span>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg">원페이지 소개형</h3>
-            <p class="text-sm text-ink/60 mt-2">1인기업·소규모 브랜드를 위한 심플한 원페이지 사이트</p>
-            <div class="flex items-baseline gap-1 mt-4">
-              <span class="text-violet font-semibold text-xl">300,000원</span><span class="text-ink/50 text-sm">~ · 3~5일</span>
-            </div>
-          </div>
+          <a href="#contact" class="inline-flex items-center gap-1 text-sm font-medium text-ink mt-4 hover:text-violet transition-colors duration-200">
+            자세히보기 <span aria-hidden="true">→</span>
+          </a>
+          <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-mint/10" viewBox="0 0 24 24" fill="currentColor"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
         </article>
-        <article class="pkg-card bg-white rounded-2xl overflow-hidden shadow-card">
-          <div class="h-44 flex items-center justify-center bg-gradient-to-br from-violet/[0.09] to-cream">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" /></svg>
+
+        <article class="relative bg-ink rounded-2xl shadow-card p-8 overflow-hidden">
+          <p class="text-xs tracking-[0.2em] uppercase text-mint font-medium mb-4">Premium</p>
+          <h3 class="font-display text-2xl mb-2 text-cream">프리미엄</h3>
+          <p class="text-sm text-creamMuted leading-relaxed">완전 맞춤 디자인, 이커머스·관리자 페이지까지 포함하는 풀커스텀 제작</p>
+          <div class="flex items-baseline gap-1 mt-6 mb-2">
+            <span class="text-mint font-semibold text-xl">협의 후 견적</span><span class="text-creamMuted text-sm">· 3~4주+</span>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg">심플 랜딩페이지</h3>
-            <p class="text-sm text-ink/60 mt-2">제품·서비스 홍보를 위한 전환 중심 랜딩페이지</p>
-            <div class="flex items-baseline gap-1 mt-4">
-              <span class="text-violet font-semibold text-xl">350,000원</span><span class="text-ink/50 text-sm">~ · 3~5일</span>
-            </div>
-          </div>
-        </article>
-        <article class="pkg-card bg-white rounded-2xl overflow-hidden shadow-card">
-          <div class="h-44 flex items-center justify-center bg-gradient-to-br from-violet/[0.09] to-cream">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 19.5h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25z" /></svg>
-          </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg">포트폴리오형</h3>
-            <p class="text-sm text-ink/60 mt-2">개인·팀의 작업물을 보여주는 갤러리형 사이트</p>
-            <div class="flex items-baseline gap-1 mt-4">
-              <span class="text-violet font-semibold text-xl">300,000원</span><span class="text-ink/50 text-sm">~ · 3~5일</span>
-            </div>
-          </div>
+          <a href="#contact" class="inline-flex items-center gap-1 text-sm font-medium text-cream mt-4 hover:text-mint transition-colors duration-200">
+            자세히보기 <span aria-hidden="true">→</span>
+          </a>
+          <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-cream/10" viewBox="0 0 24 24" fill="currentColor"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" /></svg>
         </article>
       </div>
+    </div>
+  </section>
 
-      <!-- 스탠다드 -->
-      <div data-tab-panel="standard" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <article class="pkg-card bg-white rounded-2xl overflow-hidden shadow-card">
-          <div class="h-44 flex items-center justify-center bg-gradient-to-br from-mint/[0.09] to-cream">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-mint-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
-          </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg">멀티페이지 브랜드사이트</h3>
-            <p class="text-sm text-ink/60 mt-2">회사소개·서비스·문의 등 다중 페이지 구성</p>
-            <div class="flex items-baseline gap-1 mt-4">
-              <span class="text-violet font-semibold text-xl">800,000원</span><span class="text-ink/50 text-sm">~ · 1~2주</span>
-            </div>
-          </div>
-        </article>
-        <article class="pkg-card bg-white rounded-2xl overflow-hidden shadow-card">
-          <div class="h-44 flex items-center justify-center bg-gradient-to-br from-mint/[0.09] to-cream">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-mint-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
-          </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg">예약·문의 폼 연동형</h3>
-            <p class="text-sm text-ink/60 mt-2">상담·예약 폼과 데이터 저장까지 연동되는 사이트</p>
-            <div class="flex items-baseline gap-1 mt-4">
-              <span class="text-violet font-semibold text-xl">950,000원</span><span class="text-ink/50 text-sm">~ · 1~2주</span>
-            </div>
-          </div>
-        </article>
-        <article class="pkg-card bg-white rounded-2xl overflow-hidden shadow-card">
-          <div class="h-44 flex items-center justify-center bg-gradient-to-br from-mint/[0.09] to-cream">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-mint-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>
-          </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg">블로그 연동형</h3>
-            <p class="text-sm text-ink/60 mt-2">콘텐츠 발행이 잦은 브랜드를 위한 블로그 포함형</p>
-            <div class="flex items-baseline gap-1 mt-4">
-              <span class="text-violet font-semibold text-xl">900,000원</span><span class="text-ink/50 text-sm">~ · 1~2주</span>
-            </div>
-          </div>
-        </article>
+  <!-- ===================== PORTFOLIO (예시 디자인 컨셉) ===================== -->
+  <section id="portfolio" class="bg-inkSoft py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-6">
+        <p class="text-mint text-xs tracking-[0.25em] uppercase font-medium mb-4">Portfolio</p>
+        <h2 class="font-display text-cream text-3xl sm:text-4xl">예시로 보는 디자인 컨셉</h2>
+        <p class="text-creamMuted text-sm sm:text-base mt-4 max-w-xl mx-auto">
+          아직 완료된 고객 프로젝트가 아닌, 다양한 업종에 적용 가능한 예시 디자인 컨셉입니다.
+        </p>
       </div>
 
-      <!-- 프리미엄 -->
-      <div data-tab-panel="premium" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <article class="pkg-card bg-white rounded-2xl overflow-hidden shadow-card">
-          <div class="h-44 flex items-center justify-center bg-gradient-to-br from-ink to-inkSoft">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" /></svg>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5 mt-14">
+        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-violet/25 to-ink">
+          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
+            <p class="font-display text-cream text-xl">CAFÉ LUNE</p>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg">완전 맞춤 디자인</h3>
-            <p class="text-sm text-ink/60 mt-2">브랜드 아이덴티티부터 설계하는 풀커스텀 제작</p>
-            <div class="flex items-baseline gap-1 mt-4">
-              <span class="text-violet font-semibold text-xl">협의 후 견적</span><span class="text-ink/50 text-sm">· 3~4주</span>
-            </div>
-          </div>
+          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">카페 브랜드 소개 사이트</p>
         </article>
-        <article class="pkg-card bg-white rounded-2xl overflow-hidden shadow-card">
-          <div class="h-44 flex items-center justify-center bg-gradient-to-br from-ink to-inkSoft">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+
+        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-mint/25 to-ink">
+          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
+            <p class="font-display text-cream text-xl">FIT&amp;CORE</p>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg">이커머스·결제 연동</h3>
-            <p class="text-sm text-ink/60 mt-2">상품 판매와 결제 시스템까지 갖춘 쇼핑몰형</p>
-            <div class="flex items-baseline gap-1 mt-4">
-              <span class="text-violet font-semibold text-xl">협의 후 견적</span><span class="text-ink/50 text-sm">· 3~4주+</span>
-            </div>
-          </div>
+          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">피트니스 예약형 사이트</p>
         </article>
-        <article class="pkg-card bg-white rounded-2xl overflow-hidden shadow-card">
-          <div class="h-44 flex items-center justify-center bg-gradient-to-br from-ink to-inkSoft">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.653.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.34.183-.582.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.652-.87a6.528 6.528 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.34-.183.582-.495.644-.869l.213-1.28z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+
+        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-ink to-inkSoft">
+          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
+            <p class="font-display text-cream text-xl italic">Atelier Baum</p>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg">관리자 페이지 포함</h3>
-            <p class="text-sm text-ink/60 mt-2">문의·콘텐츠를 직접 관리하는 어드민 페이지 포함</p>
-            <div class="flex items-baseline gap-1 mt-4">
-              <span class="text-violet font-semibold text-xl">협의 후 견적</span><span class="text-ink/50 text-sm">· 3~4주+</span>
-            </div>
+          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">인테리어 스튜디오 포트폴리오</p>
+        </article>
+
+        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-violet/25 to-ink">
+          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
+            <p class="font-display text-cream text-xl">Bakery Note</p>
           </div>
+          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">베이커리 브랜드사이트</p>
+        </article>
+
+        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-mint/25 to-ink">
+          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
+            <p class="font-display text-cream text-xl">LAW &amp; CO</p>
+          </div>
+          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">법률사무소 소개 사이트</p>
+        </article>
+
+        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-ink to-inkSoft">
+          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
+            <p class="font-display text-cream text-xl">Petit Studio</p>
+          </div>
+          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">원데이클래스 예약 사이트</p>
         </article>
       </div>
     </div>
   </section>
 
   <!-- ===================== BRAND STATEMENT BANNER ===================== -->
-  <section id="portfolio" class="bg-ink grid grid-cols-1 lg:grid-cols-2">
+  <section class="bg-ink grid grid-cols-1 lg:grid-cols-2">
     <img src="https://placehold.co/960x720/171A26/33D6A6?text=BuildOn+Process" alt="BuildOn 제작 과정" class="w-full h-72 lg:h-full object-cover">
     <div class="flex items-center px-8 sm:px-16 py-16 lg:py-0">
       <p class="font-display text-cream text-2xl sm:text-3xl leading-relaxed max-w-md">
@@ -498,7 +448,7 @@
       </div>
       <nav class="flex flex-wrap gap-x-8 gap-y-3 text-sm text-creamMuted">
         <a href="#services" class="hover:text-cream transition-colors duration-200">서비스</a>
-        <a href="#portfolio" class="hover:text-cream transition-colors duration-200">진행 방식</a>
+        <a href="#portfolio" class="hover:text-cream transition-colors duration-200">포트폴리오</a>
         <a href="#testimonials" class="hover:text-cream transition-colors duration-200">고객 후기</a>
         <a href="#contact" class="hover:text-cream transition-colors duration-200">문의</a>
       </nav>
@@ -546,18 +496,6 @@
     };
     document.addEventListener('scroll', onScroll);
     onScroll();
-
-    // pricing tabs
-    const tabButtons = document.querySelectorAll('[data-tab-btn]');
-    const tabPanels = document.querySelectorAll('[data-tab-panel]');
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabButtons.forEach(b => b.classList.remove('active'));
-        tabPanels.forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelector(`[data-tab-panel="${btn.dataset.tabBtn}"]`).classList.add('active');
-      });
-    });
 
     // consultation form -> Supabase 저장 + 이메일 알림
     // 아래 URL/publishable key는 Supabase 설계상 클라이언트에 공개되는 값이며,
