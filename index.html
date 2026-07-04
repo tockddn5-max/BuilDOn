@@ -466,6 +466,15 @@
   </footer>
 
   <script>
+    // 항상 맨 위에서 시작 (모바일 브라우저의 스크롤 위치 복원 방지 + 남아있는 #해시로 인한 자동 스크롤 방지)
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+
     // mobile menu
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
