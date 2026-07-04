@@ -20,6 +20,8 @@
           inkLine: 'rgba(246,243,236,0.12)',
           cream: '#F6F3EC',
           creamMuted: '#B7BACB',
+          paper: '#FFFFFF',
+          mist: '#EEF1F7',
           violet: { DEFAULT: '#6C5CE0', dark: '#5546C4', light: '#8B7FF0' },
           mint: { DEFAULT: '#33D6A6', dark: '#22B78D' },
         },
@@ -29,7 +31,7 @@
         },
         boxShadow: {
           violet: '0 20px 40px -14px rgba(108,92,224,0.45), 0 8px 20px -10px rgba(17,19,28,0.5)',
-          card: '0 24px 48px -20px rgba(17,19,28,0.25), 0 4px 12px -4px rgba(108,92,224,0.08)',
+          card: '0 24px 48px -20px rgba(17,19,28,0.16), 0 4px 12px -4px rgba(108,92,224,0.06)',
         },
       },
     },
@@ -37,7 +39,8 @@
 </script>
 <style>
   html { scroll-behavior: smooth; }
-  body { background-color: #F6F3EC; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { background-color: #FFFFFF; }
 
   .btn-primary {
     background-color: #6C5CE0;
@@ -48,7 +51,7 @@
     box-shadow: 0 20px 40px -14px rgba(108,92,224,0.45), 0 8px 20px -10px rgba(17,19,28,0.35);
   }
   .btn-primary:hover { background-color: #5546C4; transform: scale(1.03); }
-  .btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(108,92,224,0.5), 0 0 0 5px #11131C; }
+  .btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(108,92,224,0.5), 0 0 0 5px #ffffff; }
   .btn-primary:active { transform: scale(0.97); }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
@@ -77,6 +80,28 @@
   .btn-ghost-dark:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(51,214,166,0.4); }
   .btn-ghost-dark:active { transform: scale(0.98); }
 
+  .btn-cream {
+    background-color: #F6F3EC;
+    color: #6C5CE0;
+    transition-property: transform, background-color;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+  }
+  .btn-cream:hover { background-color: #ffffff; transform: scale(1.03); }
+  .btn-cream:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,0.7); }
+  .btn-cream:active { transform: scale(0.97); }
+
+  .btn-chat {
+    background-color: #6C5CE0;
+    color: #F6F3EC;
+    transition-property: transform, background-color, box-shadow;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+    box-shadow: 0 16px 32px -12px rgba(108,92,224,0.5);
+  }
+  .btn-chat:hover { background-color: #5546C4; transform: scale(1.05); }
+  .btn-chat:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(108,92,224,0.4); }
+  .btn-chat:active { transform: scale(0.95); }
 
   .field {
     background-color: rgba(246,243,236,0.05);
@@ -105,7 +130,7 @@
     font-weight: 900;
     letter-spacing: -0.02em;
     line-height: 0.9;
-    color: #F6F3EC;
+    color: #11131C;
     clip-path: polygon(3% 20%, 97% 0%, 100% 80%, 4% 100%);
     padding: 2px 8px;
   }
@@ -114,12 +139,43 @@
 
   .fade-up { opacity: 0; transform: translateY(16px); transition: opacity 600ms ease-out, transform 600ms ease-out; }
   .fade-up.in-view { opacity: 1; transform: translateY(0); }
+
+  /* ---- hero marquee ---- */
+  .marquee-row { overflow: hidden; }
+  .marquee-track { display: flex; gap: 16px; width: max-content; will-change: transform; }
+  .marquee-track.dir-left { animation: marquee-left 42s linear infinite; }
+  .marquee-track.dir-right { animation: marquee-right 50s linear infinite; }
+  .marquee-row:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track.dir-left, .marquee-track.dir-right { animation: none; }
+  }
+
+  .mc {
+    width: 148px; height: 96px; flex-shrink: 0; border-radius: 14px; padding: 12px;
+    background: rgba(246,243,236,0.05); border: 1px solid rgba(246,243,236,0.10);
+  }
+  .mc .mc-bar { display: flex; gap: 4px; margin-bottom: 10px; }
+  .mc .mc-bar span { width: 5px; height: 5px; border-radius: 999px; background: rgba(246,243,236,0.25); }
+  .mc .mc-line { height: 7px; border-radius: 4px; margin-bottom: 6px; }
+  .mc .mc-line.w-full { width: 100%; }
+  .mc .mc-line.w-2\/3 { width: 66%; }
+  .mc .mc-block { height: 26px; border-radius: 6px; margin-top: 4px; }
+  .mc.mc-violet .mc-line, .mc.mc-violet .mc-block { background: rgba(108,92,224,0.35); }
+  .mc.mc-mint .mc-line, .mc.mc-mint .mc-block { background: rgba(51,214,166,0.30); }
+  .mc.mc-cream .mc-line, .mc.mc-cream .mc-block { background: rgba(246,243,236,0.20); }
+
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details .faq-chevron { transition: transform 200ms ease-out; }
+  details[open] .faq-chevron { transform: rotate(180deg); }
 </style>
 </head>
 <body class="font-sans text-ink antialiased">
 
   <!-- ===================== HEADER ===================== -->
-  <header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-colors duration-300">
+  <header id="site-header" class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-b border-ink/8">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
       <a href="#top" class="logo-mark">
         <span class="logo-stack">
@@ -129,15 +185,16 @@
         </span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-10 text-sm text-cream/85">
+      <nav class="hidden md:flex items-center gap-9 text-sm text-ink/70">
         <a href="#services" class="nav-link">서비스</a>
         <a href="#portfolio" class="nav-link">포트폴리오</a>
-        <a href="#testimonials" class="nav-link">고객 후기</a>
+        <a href="#testimonials" class="nav-link">약속</a>
+        <a href="#faq" class="nav-link">FAQ</a>
         <a href="#contact" class="nav-link">문의</a>
       </nav>
 
       <div class="hidden md:flex items-center gap-5">
-        <span class="text-xs text-cream/60 leading-tight text-right">
+        <span class="text-xs text-ink/50 leading-tight text-right">
           평일 10:00–19:00<br>상담 가능
         </span>
         <a href="#contact">
@@ -145,7 +202,7 @@
         </a>
       </div>
 
-      <button id="menu-toggle" class="md:hidden text-cream w-9 h-9 flex items-center justify-center" aria-label="메뉴 열기">
+      <button id="menu-toggle" class="md:hidden text-ink w-9 h-9 flex items-center justify-center" aria-label="메뉴 열기">
         <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
         </svg>
@@ -156,10 +213,11 @@
     </div>
 
     <!-- mobile menu -->
-    <div id="mobile-menu" class="md:hidden hidden bg-ink border-t border-inkLine px-6 py-8 flex flex-col gap-6 text-cream">
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-ink/8 px-6 py-8 flex flex-col gap-6 text-ink">
       <a href="#services" class="text-lg">서비스</a>
       <a href="#portfolio" class="text-lg">포트폴리오</a>
-      <a href="#testimonials" class="text-lg">고객 후기</a>
+      <a href="#testimonials" class="text-lg">약속</a>
+      <a href="#faq" class="text-lg">FAQ</a>
       <a href="#contact" class="text-lg">문의</a>
       <a href="#contact">
         <button class="btn-primary w-full text-sm font-medium px-5 py-3 rounded-full mt-2">무료 상담 신청</button>
@@ -167,23 +225,71 @@
     </div>
   </header>
 
+  <!-- ===================== FLOATING KAKAO CHAT BUTTON ===================== -->
+  <a href="https://pf.kakao.com/_xxxxxxx" target="_blank" rel="noopener"
+     class="btn-chat fixed bottom-6 right-6 z-40 rounded-full px-5 py-3.5 text-sm font-medium inline-flex items-center gap-2 shadow-lg">
+    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.477 3 2 6.463 2 10.74c0 2.72 1.82 5.11 4.56 6.49-.2.73-.73 2.68-.84 3.1-.13.51.19.5.4.37.16-.1 2.6-1.77 3.66-2.5.71.1 1.44.15 2.22.15 5.523 0 10-3.463 10-7.74S17.523 3 12 3z"/></svg>
+    톡상담
+  </a>
+
   <!-- ===================== HERO ===================== -->
   <section id="top" class="relative min-h-[92vh] flex items-center bg-ink overflow-hidden">
     <div class="absolute inset-0" style="background:
         radial-gradient(circle at 80% 30%, rgba(108,92,224,0.35), transparent 45%),
         radial-gradient(circle at 95% 75%, rgba(51,214,166,0.16), transparent 40%),
-        repeating-linear-gradient(115deg, rgba(246,243,236,0.035) 0px, rgba(246,243,236,0.035) 1px, transparent 1px, transparent 64px),
         #11131C;">
     </div>
-    <div class="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent"></div>
+
+    <!-- sliding marquee rows (decorative, abstract mockups only) -->
+    <div class="absolute inset-0 flex flex-col justify-between py-16 opacity-70" aria-hidden="true">
+      <div class="marquee-row">
+        <div class="marquee-track dir-left">
+          <div class="mc mc-violet"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-mint"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-cream"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-violet"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-mint"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-cream"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <!-- duplicate for seamless loop -->
+          <div class="mc mc-violet"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-mint"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-cream"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-violet"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-mint"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-cream"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+        </div>
+      </div>
+      <div class="marquee-row">
+        <div class="marquee-track dir-right">
+          <div class="mc mc-mint"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-cream"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-violet"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-mint"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-cream"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-violet"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <!-- duplicate for seamless loop -->
+          <div class="mc mc-mint"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-cream"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-violet"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-mint"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-cream"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+          <div class="mc mc-violet"><div class="mc-bar"><span></span><span></span><span></span></div><div class="mc-line w-full"></div><div class="mc-line w-2/3"></div><div class="mc-block"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/30"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-ink/60"></div>
 
     <div class="relative max-w-7xl mx-auto px-6 lg:px-10 pt-24 pb-16 w-full">
-      <p class="text-mint tracking-[0.25em] text-xs font-medium mb-6 uppercase">Website for Startups &amp; Solo Founders</p>
-      <h1 class="font-display text-cream text-4xl sm:text-5xl lg:text-6xl leading-[1.15] max-w-3xl">
-        당신의 브랜드에<br>한 걸음 앞서는 홈페이지
+      <p class="text-mint tracking-[0.25em] text-xs font-medium mb-6 uppercase">Web Agency BuildOn</p>
+      <h1 class="font-display text-cream leading-[1.15] max-w-3xl">
+        <span class="inline-block align-middle bg-violet/25 text-violet-light rounded-xl px-3 py-1 text-lg sm:text-xl lg:text-2xl mr-2 mb-2">스타트업 · 1인기업</span>
+        <span class="align-middle text-4xl sm:text-5xl lg:text-6xl">홈페이지 제작 전문</span><br>
+        <span class="text-4xl sm:text-5xl lg:text-6xl">BuildOn</span>
       </h1>
       <p class="text-creamMuted text-base sm:text-lg mt-6 max-w-xl">
-        저가형부터 프리미엄 맞춤형까지, BuildOn이 만드는 완성도 높은 홈페이지로 브랜드의 첫인상을 완성하세요.
+        저가형부터 프리미엄 맞춤형까지, 꼼꼼한 제작 프로세스로 완성도 높은 홈페이지를 만듭니다.
       </p>
       <div class="mt-10 flex flex-wrap items-center gap-4">
         <a href="#contact">
@@ -198,25 +304,54 @@
   </section>
 
   <!-- ===================== FEATURES BAR ===================== -->
-  <section class="bg-inkSoft border-t border-inkLine">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-inkLine text-center">
+  <section class="bg-paper border-b border-ink/8">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-ink/8 text-center">
       <div class="py-6 sm:py-0">
-        <p class="text-cream font-display text-lg">합리적인 가격</p>
-        <p class="text-creamMuted text-sm mt-2">저가형부터 시작 가능한 요금 구조</p>
+        <p class="text-ink font-display text-lg">합리적인 가격</p>
+        <p class="text-ink/50 text-sm mt-2">저가형부터 시작 가능한 요금 구조</p>
       </div>
       <div class="py-6 sm:py-0">
-        <p class="text-cream font-display text-lg">빠른 제작 기간</p>
-        <p class="text-creamMuted text-sm mt-2">최소 3일, 평균 2주 내 완성</p>
+        <p class="text-ink font-display text-lg">빠른 제작 기간</p>
+        <p class="text-ink/50 text-sm mt-2">최소 3일, 평균 2주 내 완성</p>
       </div>
       <div class="py-6 sm:py-0">
-        <p class="text-cream font-display text-lg">런칭 후 무료 A/S</p>
-        <p class="text-creamMuted text-sm mt-2">오픈 후 30일 무상 수정 지원</p>
+        <p class="text-ink font-display text-lg">런칭 후 무료 A/S</p>
+        <p class="text-ink/50 text-sm mt-2">오픈 후 30일 무상 수정 지원</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTRO / STATS ===================== -->
+  <section class="py-24 sm:py-32" style="background: radial-gradient(circle at 15% 20%, rgba(108,92,224,0.08), transparent 45%), radial-gradient(circle at 85% 80%, rgba(51,214,166,0.08), transparent 45%), #ffffff;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <p class="inline-block bg-violet/10 text-violet text-xs tracking-[0.15em] uppercase font-medium px-3 py-1 rounded-full mb-6">Intro</p>
+      <h2 class="font-display text-3xl sm:text-4xl leading-snug max-w-2xl">
+        <span class="text-violet">스타트업부터 1인기업까지</span>,<br>BuildOn은 이렇게 약속합니다.
+      </h2>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-14">
+        <div class="bg-violet/5 rounded-2xl p-6 text-center">
+          <p class="text-xs text-ink/50 mb-3">요금제</p>
+          <p class="font-display text-3xl sm:text-4xl text-ink"><span data-countup data-target="3">0</span><span class="text-violet">가지</span></p>
+        </div>
+        <div class="bg-mint/5 rounded-2xl p-6 text-center">
+          <p class="text-xs text-ink/50 mb-3">최소 제작기간</p>
+          <p class="font-display text-3xl sm:text-4xl text-ink"><span data-countup data-target="3">0</span><span class="text-mint-dark">일부터</span></p>
+        </div>
+        <div class="bg-violet/5 rounded-2xl p-6 text-center">
+          <p class="text-xs text-ink/50 mb-3">무료 A/S</p>
+          <p class="font-display text-3xl sm:text-4xl text-ink"><span data-countup data-target="30">0</span><span class="text-violet">일</span></p>
+        </div>
+        <div class="bg-mint/5 rounded-2xl p-6 text-center">
+          <p class="text-xs text-ink/50 mb-3">상담 응답</p>
+          <p class="font-display text-3xl sm:text-4xl text-ink"><span data-countup data-target="24">0</span><span class="text-mint-dark">시간 이내</span></p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ===================== OUR SERVICE ===================== -->
-  <section id="services" class="bg-cream py-24 sm:py-32">
+  <section id="services" class="bg-white py-24 sm:py-32">
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
       <div class="text-center mb-16">
         <p class="text-ink/50 text-sm">저가형부터 프리미엄 맞춤형까지, BuildOn이 함께합니다</p>
@@ -227,7 +362,7 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
-        <article class="relative bg-white rounded-2xl shadow-card p-8 overflow-hidden">
+        <article class="relative bg-white rounded-2xl shadow-card border border-ink/8 p-8 overflow-hidden">
           <p class="text-xs tracking-[0.2em] uppercase text-violet font-medium mb-4">Starter</p>
           <h3 class="font-display text-2xl mb-2">저가형</h3>
           <p class="text-sm text-ink/60 leading-relaxed">1인기업·소규모 브랜드를 위한 원페이지/랜딩페이지 제작</p>
@@ -240,7 +375,7 @@
           <svg class="absolute -right-3 -bottom-3 w-24 h-24 text-violet/10" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
         </article>
 
-        <article class="relative bg-white rounded-2xl shadow-card p-8 overflow-hidden">
+        <article class="relative bg-white rounded-2xl shadow-card border border-ink/8 p-8 overflow-hidden">
           <p class="text-xs tracking-[0.2em] uppercase text-mint-dark font-medium mb-4">Standard</p>
           <h3 class="font-display text-2xl mb-2">스탠다드</h3>
           <p class="text-sm text-ink/60 leading-relaxed">멀티페이지 브랜드사이트, 예약·문의 폼 연동까지 갖춘 제작</p>
@@ -270,76 +405,158 @@
   </section>
 
   <!-- ===================== PORTFOLIO (예시 디자인 컨셉) ===================== -->
-  <section id="portfolio" class="bg-inkSoft py-24 sm:py-32">
+  <section id="portfolio" class="bg-mist py-24 sm:py-32">
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
       <div class="text-center mb-6">
-        <p class="text-mint text-xs tracking-[0.25em] uppercase font-medium mb-4">Portfolio</p>
-        <h2 class="font-display text-cream text-3xl sm:text-4xl">예시로 보는 디자인 컨셉</h2>
-        <p class="text-creamMuted text-sm sm:text-base mt-4 max-w-xl mx-auto">
+        <p class="text-mint-dark text-xs tracking-[0.25em] uppercase font-medium mb-4">Portfolio</p>
+        <h2 class="font-display text-ink text-3xl sm:text-4xl">예시로 보는 디자인 컨셉</h2>
+        <p class="text-ink/60 text-sm sm:text-base mt-4 max-w-xl mx-auto">
           아직 완료된 고객 프로젝트가 아닌, 다양한 업종에 적용 가능한 예시 디자인 컨셉입니다.
         </p>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5 mt-14">
-        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-violet/25 to-ink">
-          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
-            <p class="font-display text-cream text-xl">CAFÉ LUNE</p>
-          </div>
-          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">카페 브랜드 소개 사이트</p>
-        </article>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 sm:gap-x-5 gap-y-8 mt-14">
+        <div>
+          <p class="text-xs text-ink/45 mb-2">카페 · 예시</p>
+          <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-violet/30 to-ink">
+            <div class="h-full flex items-center justify-center text-center px-4">
+              <p class="font-display text-cream text-xl">CAFÉ LUNE</p>
+            </div>
+          </article>
+          <p class="text-sm text-ink/60 mt-3 text-center">카페 브랜드 소개 사이트</p>
+        </div>
 
-        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-mint/25 to-ink">
-          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
-            <p class="font-display text-cream text-xl">FIT&amp;CORE</p>
-          </div>
-          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">피트니스 예약형 사이트</p>
-        </article>
+        <div>
+          <p class="text-xs text-ink/45 mb-2">피트니스 · 예시</p>
+          <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-mint/30 to-ink">
+            <div class="h-full flex items-center justify-center text-center px-4">
+              <p class="font-display text-cream text-xl">FIT&amp;CORE</p>
+            </div>
+          </article>
+          <p class="text-sm text-ink/60 mt-3 text-center">피트니스 예약형 사이트</p>
+        </div>
 
-        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-ink to-inkSoft">
-          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
-            <p class="font-display text-cream text-xl italic">Atelier Baum</p>
-          </div>
-          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">인테리어 스튜디오 포트폴리오</p>
-        </article>
+        <div>
+          <p class="text-xs text-ink/45 mb-2">인테리어 · 예시</p>
+          <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-ink to-inkSoft">
+            <div class="h-full flex items-center justify-center text-center px-4">
+              <p class="font-display text-cream text-xl italic">Atelier Baum</p>
+            </div>
+          </article>
+          <p class="text-sm text-ink/60 mt-3 text-center">인테리어 스튜디오 포트폴리오</p>
+        </div>
 
-        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-violet/25 to-ink">
-          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
-            <p class="font-display text-cream text-xl">Bakery Note</p>
-          </div>
-          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">베이커리 브랜드사이트</p>
-        </article>
+        <div>
+          <p class="text-xs text-ink/45 mb-2">베이커리 · 예시</p>
+          <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-violet/30 to-ink">
+            <div class="h-full flex items-center justify-center text-center px-4">
+              <p class="font-display text-cream text-xl">Bakery Note</p>
+            </div>
+          </article>
+          <p class="text-sm text-ink/60 mt-3 text-center">베이커리 브랜드사이트</p>
+        </div>
 
-        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-mint/25 to-ink">
-          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
-            <p class="font-display text-cream text-xl">LAW &amp; CO</p>
-          </div>
-          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">법률사무소 소개 사이트</p>
-        </article>
+        <div>
+          <p class="text-xs text-ink/45 mb-2">법률사무소 · 예시</p>
+          <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-mint/30 to-ink">
+            <div class="h-full flex items-center justify-center text-center px-4">
+              <p class="font-display text-cream text-xl">LAW &amp; CO</p>
+            </div>
+          </article>
+          <p class="text-sm text-ink/60 mt-3 text-center">법률사무소 소개 사이트</p>
+        </div>
 
-        <article class="group relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-ink to-inkSoft">
-          <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
-            <p class="font-display text-cream text-xl">Petit Studio</p>
-          </div>
-          <p class="absolute bottom-0 inset-x-0 bg-ink/70 backdrop-blur-sm text-cream/80 text-xs text-center py-2">원데이클래스 예약 사이트</p>
-        </article>
+        <div>
+          <p class="text-xs text-ink/45 mb-2">원데이클래스 · 예시</p>
+          <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-ink to-inkSoft">
+            <div class="h-full flex items-center justify-center text-center px-4">
+              <p class="font-display text-cream text-xl">Petit Studio</p>
+            </div>
+          </article>
+          <p class="text-sm text-ink/60 mt-3 text-center">원데이클래스 예약 사이트</p>
+        </div>
+
+        <div>
+          <p class="text-xs text-ink/45 mb-2">반려동물 케어 · 예시</p>
+          <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-violet/30 to-ink">
+            <div class="h-full flex items-center justify-center text-center px-4">
+              <p class="font-display text-cream text-xl">PAWS &amp; CO</p>
+            </div>
+          </article>
+          <p class="text-sm text-ink/60 mt-3 text-center">반려동물 케어 브랜드사이트</p>
+        </div>
+
+        <div>
+          <p class="text-xs text-ink/45 mb-2">게스트하우스 · 예시</p>
+          <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-mint/30 to-ink">
+            <div class="h-full flex items-center justify-center text-center px-4">
+              <p class="font-display text-cream text-xl italic">Stay Mare</p>
+            </div>
+          </article>
+          <p class="text-sm text-ink/60 mt-3 text-center">게스트하우스 예약 사이트</p>
+        </div>
+
+        <div>
+          <p class="text-xs text-ink/45 mb-2">뷰티샵 · 예시</p>
+          <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-ink to-inkSoft">
+            <div class="h-full flex items-center justify-center text-center px-4">
+              <p class="font-display text-cream text-xl">GLOW BEAUTY</p>
+            </div>
+          </article>
+          <p class="text-sm text-ink/60 mt-3 text-center">뷰티샵 예약 사이트</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== BRAND STATEMENT BANNER ===================== -->
-  <section class="bg-ink grid grid-cols-1 lg:grid-cols-2">
-    <img src="https://placehold.co/960x720/171A26/33D6A6?text=BuildOn+Process" alt="BuildOn 제작 과정" class="w-full h-72 lg:h-full object-cover">
-    <div class="flex items-center px-8 sm:px-16 py-16 lg:py-0">
-      <p class="font-display text-cream text-2xl sm:text-3xl leading-relaxed max-w-md">
-        BuildOn은 단순한 홈페이지 제작을 넘어,<br>
-        브랜드의 <span class="text-mint">첫인상</span>을 완성하는<br>
-        파트너가 되겠습니다.
-      </p>
+  <!-- ===================== BANNER STRIP ===================== -->
+  <section class="bg-violet">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+      <p class="text-cream text-sm sm:text-base font-medium">여러분의 홈페이지 제작, 투명한 3단계 요금제로 알려드립니다.</p>
+      <a href="#services"><button class="btn-cream px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap">요금제 보러가기 →</button></a>
+    </div>
+  </section>
+
+  <!-- ===================== TRUST / GUARANTEE (A/S) ===================== -->
+  <section class="bg-ink py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+      <div>
+        <p class="inline-block bg-mint/10 text-mint text-xs tracking-[0.2em] uppercase font-medium px-3 py-1 rounded-full mb-6">안심 A/S 제도</p>
+        <h2 class="font-display text-cream text-3xl sm:text-4xl leading-snug mb-5">
+          처음 시작한 홈페이지 제작,<br>놓치는 부분 없을까 걱정되시나요?
+        </h2>
+        <p class="text-creamMuted text-sm sm:text-base leading-relaxed mb-6 max-w-md">
+          BuildOn은 오픈 후 <span class="text-mint font-medium">30일간 무료 A/S</span>를 제공합니다. 운영 중 발견되는 문제나 사소한 수정 요청까지 책임지고 대응해드립니다.
+        </p>
+        <a href="#faq" class="text-mint text-sm font-medium hover:underline">무료 A/S 범위 자세히 보기 →</a>
+      </div>
+      <div class="rounded-2xl border border-inkLine bg-inkSoft p-6">
+        <div class="flex gap-1.5 mb-5">
+          <span class="w-2.5 h-2.5 rounded-full bg-cream/20"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-cream/20"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-cream/20"></span>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full bg-mint/15 flex items-center justify-center flex-shrink-0">
+            <svg class="w-7 h-7 text-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+          </div>
+          <div>
+            <p class="text-cream font-display text-xl">30일 무료 A/S</p>
+            <p class="text-creamMuted text-sm mt-1">오픈 후 30일, 수정 요청 언제든 환영</p>
+          </div>
+        </div>
+        <div class="mt-6 space-y-3">
+          <div class="flex items-center justify-between text-sm"><span class="text-creamMuted">신청 접수</span><span class="text-mint">완료</span></div>
+          <div class="h-1.5 rounded-full bg-cream/10 overflow-hidden"><div class="h-full w-full bg-mint rounded-full"></div></div>
+          <div class="flex items-center justify-between text-sm"><span class="text-creamMuted">수정 처리</span><span class="text-mint">진행중</span></div>
+          <div class="h-1.5 rounded-full bg-cream/10 overflow-hidden"><div class="h-full w-2/3 bg-mint rounded-full"></div></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ===================== TECH STACK ===================== -->
-  <section class="bg-cream py-20">
+  <section class="bg-white py-20">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 text-center">
       <p class="text-violet text-xs tracking-[0.25em] uppercase font-medium mb-3">Tech Stack</p>
       <h2 class="font-display text-2xl sm:text-3xl mb-14">신뢰할 수 있는 기술로 만듭니다</h2>
@@ -354,87 +571,268 @@
     </div>
   </section>
 
-  <!-- ===================== TESTIMONIALS ===================== -->
-  <section id="testimonials" class="bg-cream pb-24 sm:pb-32">
+  <!-- ===================== DIFFERENCE ===================== -->
+  <section class="bg-paper py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-20">
+        <p class="inline-block bg-violet/10 text-violet text-xs tracking-[0.15em] uppercase font-medium px-3 py-1 rounded-full mb-6">Difference</p>
+        <h2 class="font-display text-3xl sm:text-4xl">BuildOn은 <span class="text-violet">4가지가</span> 다릅니다.</h2>
+      </div>
+
+      <div class="space-y-20 sm:space-y-28">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div class="bg-violet/5 rounded-2xl aspect-[4/3] flex items-center justify-center order-2 lg:order-1">
+            <svg class="w-20 h-20 text-violet/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" /><circle cx="12" cy="12" r="9" /></svg>
+          </div>
+          <div class="order-1 lg:order-2">
+            <p class="inline-flex items-center gap-2 text-xs text-violet font-medium mb-3"><span class="w-6 h-6 rounded-full bg-violet/10 flex items-center justify-center text-[11px]">1</span>투명한 요금제</p>
+            <h3 class="font-display text-2xl sm:text-3xl mb-3">복잡한 견적 없이,<br><span class="text-violet">투명하게</span> 안내합니다.</h3>
+            <p class="text-ink/60 text-sm sm:text-base leading-relaxed">저가형·스탠다드·프리미엄 세 가지 요금제를 미리 공개하고, 예산에 맞는 선택을 도와드립니다.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div>
+            <p class="inline-flex items-center gap-2 text-xs text-mint-dark font-medium mb-3"><span class="w-6 h-6 rounded-full bg-mint/10 flex items-center justify-center text-[11px]">2</span>실제 코드 기반 제작</p>
+            <h3 class="font-display text-2xl sm:text-3xl mb-3">노코드 툴이 아닌,<br><span class="text-mint-dark">실제 코드</span>로 제작합니다.</h3>
+            <p class="text-ink/60 text-sm sm:text-base leading-relaxed">Next.js·React·Vercel 기반으로 제작해, 특정 플랫폼에 종속되지 않고 자유롭게 확장할 수 있습니다.</p>
+          </div>
+          <div class="bg-mint/5 rounded-2xl aspect-[4/3] flex items-center justify-center">
+            <svg class="w-20 h-20 text-mint-dark/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div class="bg-violet/5 rounded-2xl aspect-[4/3] flex items-center justify-center order-2 lg:order-1">
+            <svg class="w-20 h-20 text-violet/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.75h-.152c-3.196 0-6.1-1.248-8.25-3.286z" /></svg>
+          </div>
+          <div class="order-1 lg:order-2">
+            <p class="inline-flex items-center gap-2 text-xs text-violet font-medium mb-3"><span class="w-6 h-6 rounded-full bg-violet/10 flex items-center justify-center text-[11px]">3</span>제작 후에도 책임집니다</p>
+            <h3 class="font-display text-2xl sm:text-3xl mb-3">30일 무료 A/S와<br><span class="text-violet">체계적인 문의 관리</span></h3>
+            <p class="text-ink/60 text-sm sm:text-base leading-relaxed">오픈 후 30일 무료 A/S는 물론, 모든 문의는 데이터베이스에 안전하게 기록되어 놓치는 일이 없습니다.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div>
+            <p class="inline-flex items-center gap-2 text-xs text-mint-dark font-medium mb-3"><span class="w-6 h-6 rounded-full bg-mint/10 flex items-center justify-center text-[11px]">4</span>대표와 직접 소통</p>
+            <h3 class="font-display text-2xl sm:text-3xl mb-3">중간 담당자 없이,<br><span class="text-mint-dark">대표와 직접</span> 소통합니다.</h3>
+            <p class="text-ink/60 text-sm sm:text-base leading-relaxed">기획부터 제작, 완성까지 모든 과정을 대표가 직접 챙겨 빠르고 정확한 소통이 가능합니다.</p>
+          </div>
+          <div class="bg-mint/5 rounded-2xl aspect-[4/3] flex items-center justify-center">
+            <svg class="w-20 h-20 text-mint-dark/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 10.5h7.5m-7.5 3h4.5m5.25-9.75l4.5 4.5v9.75a1.5 1.5 0 01-1.5 1.5H4.5a1.5 1.5 0 01-1.5-1.5V4.5a1.5 1.5 0 011.5-1.5h9.75z" /></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROCESS PHILOSOPHY ===================== -->
+  <section class="bg-white py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-16">
+        <h2 class="font-display text-3xl sm:text-4xl">홈페이지는 사업의 얼굴과도 같습니다.</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+        <div>
+          <div class="bg-mist rounded-2xl aspect-[4/3] flex items-center justify-center mb-5">
+            <svg class="w-16 h-16 text-violet/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 00-2.25 2.25v13.5a2.25 2.25 0 002.25 2.25h10.176a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H15M9 3.75V6h6V3.75M9 3.75a1.5 1.5 0 013 0M12 12.75h3M9 15.75h6M9 9.75h.008" /></svg>
+          </div>
+          <p class="text-ink/60 text-sm sm:text-base leading-relaxed">대표님께서 어떤 사업을 하시는지 사전에 파악합니다. 업종별 특징을 분석하고, 홈페이지에서 사업의 강점을 극대화합니다.</p>
+        </div>
+        <div>
+          <div class="bg-violet/5 rounded-2xl aspect-[4/3] flex items-center justify-center mb-5">
+            <svg class="w-16 h-16 text-mint-dark/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
+          </div>
+          <p class="text-ink/60 text-sm sm:text-base leading-relaxed">BuildOn은 '방문자의 시선'을 생각합니다. 기획·디자인·개발 모두 방문자가 보기 편하도록 설계합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROMISE (구 TESTIMONIALS) ===================== -->
+  <section id="testimonials" class="bg-mist py-24 sm:py-32">
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
       <div class="text-center mb-14">
-        <p class="text-violet text-xs tracking-[0.25em] uppercase font-medium mb-4">Testimonials</p>
-        <h2 class="font-display text-3xl sm:text-4xl">고객이 전하는 이야기</h2>
+        <p class="text-violet text-xs tracking-[0.25em] uppercase font-medium mb-4">Promise</p>
+        <h2 class="font-display text-3xl sm:text-4xl">우리가 지키는 약속</h2>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
-        <article>
-          <img src="https://placehold.co/480x480/171A26/B7BACB?text=Client" alt="한지민" class="w-full h-64 object-cover rounded-2xl">
-          <h3 class="font-display text-lg mt-5">한지민 · 스타트업 대표</h3>
-          <p class="text-sm text-ink/60 mt-2 leading-relaxed">런칭 일정이 촉박했는데 2주 만에 완성도 높은 사이트를 받아서 정말 만족스러웠어요. 소통도 빠르고 명확했습니다.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <article class="bg-white rounded-2xl shadow-card p-6">
+          <div class="w-11 h-11 rounded-full bg-violet/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" /><circle cx="12" cy="12" r="9" /></svg>
+          </div>
+          <p class="text-xs uppercase tracking-wide text-violet font-medium mb-2">빠른 응답</p>
+          <p class="text-sm text-ink/70 leading-relaxed">문의 접수 후 24시간 이내 답변드립니다.</p>
         </article>
-        <article>
-          <img src="https://placehold.co/480x480/171A26/B7BACB?text=Client" alt="박서준" class="w-full h-64 object-cover rounded-2xl">
-          <h3 class="font-display text-lg mt-5">박서준 · 1인 창업가</h3>
-          <p class="text-sm text-ink/60 mt-2 leading-relaxed">저가형으로 시작했는데도 퀄리티가 기대 이상이었어요. 예산이 적은 창업 초기에 딱 맞는 선택이었습니다.</p>
+        <article class="bg-white rounded-2xl shadow-card p-6">
+          <div class="w-11 h-11 rounded-full bg-mint/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-mint-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z" /></svg>
+          </div>
+          <p class="text-xs uppercase tracking-wide text-mint-dark font-medium mb-2">합리적인 수정</p>
+          <p class="text-sm text-ink/70 leading-relaxed">시안 확정 전까지 요구사항 수정 3회 무료로 지원합니다.</p>
         </article>
-        <article>
-          <img src="https://placehold.co/480x480/171A26/B7BACB?text=Client" alt="이수아" class="w-full h-64 object-cover rounded-2xl">
-          <h3 class="font-display text-lg mt-5">이수아 · 브랜드 디렉터</h3>
-          <p class="text-sm text-ink/60 mt-2 leading-relaxed">프리미엄 맞춤 제작을 맡겼는데, 저희 브랜드 톤을 정확히 이해하고 구현해주셔서 놀랐습니다. 강력 추천해요.</p>
+        <article class="bg-white rounded-2xl shadow-card p-6">
+          <div class="w-11 h-11 rounded-full bg-violet/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" /></svg>
+          </div>
+          <p class="text-xs uppercase tracking-wide text-violet font-medium mb-2">투명한 진행 공유</p>
+          <p class="text-sm text-ink/70 leading-relaxed">제작 전 과정을 실시간으로 공유해드립니다.</p>
+        </article>
+        <article class="bg-white rounded-2xl shadow-card p-6">
+          <div class="w-11 h-11 rounded-full bg-mint/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-mint-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.75h-.152c-3.196 0-6.1-1.248-8.25-3.286z" /></svg>
+          </div>
+          <p class="text-xs uppercase tracking-wide text-mint-dark font-medium mb-2">안심 결제</p>
+          <p class="text-sm text-ink/70 leading-relaxed">완성본 확인 후에만 최종 결제가 진행됩니다.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- ===================== CONTACT / CONSULTATION ===================== -->
-  <section id="contact" class="bg-ink grid grid-cols-1 lg:grid-cols-2">
-    <div class="px-6 sm:px-12 lg:px-16 py-20">
-      <p class="text-mint text-xs tracking-[0.25em] uppercase font-medium mb-4">Get In Touch</p>
-      <h2 class="font-display text-cream text-3xl sm:text-4xl mb-4">지금 바로 상담을 신청하세요</h2>
-      <p class="text-creamMuted text-sm sm:text-base mb-10 max-w-md">
-        편하신 채널로 문의 주시면 24시간 내 답변드립니다. 아래 폼 작성도 가능해요.
-      </p>
-
-      <div class="flex flex-wrap gap-3 mb-12">
-        <a href="https://pf.kakao.com/_xxxxxxx" target="_blank" rel="noopener">
-          <button class="btn-ghost-dark px-5 py-3 rounded-full text-sm font-medium">카카오톡 상담하기</button>
-        </a>
-        <a href="https://form.naver.com/response/xxxxxxxxxxxxxxxxxxxx" target="_blank" rel="noopener">
-          <button class="btn-ghost-dark px-5 py-3 rounded-full text-sm font-medium">네이버폼으로 문의하기</button>
-        </a>
-        <a href="mailto:tockddn5@gmail.com">
-          <button class="btn-ghost-dark px-5 py-3 rounded-full text-sm font-medium">이메일 문의</button>
-        </a>
+  <!-- ===================== PROCESS STEPS ===================== -->
+  <section class="bg-white py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="mb-14">
+        <p class="inline-block bg-violet/10 text-violet text-xs tracking-[0.15em] uppercase font-medium px-3 py-1 rounded-full mb-6">Process</p>
+        <h2 class="font-display text-3xl sm:text-4xl mb-3">여러분의 프로젝트는 이렇게 진행됩니다.</h2>
+        <p class="text-ink/60 text-sm sm:text-base">고객님의 입장에서 쉽게 제작 과정을 풀어봤어요.</p>
       </div>
 
-      <form id="consultation-form" class="space-y-5 max-w-md" novalidate>
-        <div>
-          <label for="name" class="block text-cream/80 text-sm mb-2">이름</label>
-          <input id="name" name="name" type="text" required placeholder="홍길동" class="field w-full rounded-lg px-4 py-3 text-sm">
+      <div class="grid grid-cols-1 sm:grid-cols-5 gap-4">
+        <div class="bg-violet/5 rounded-2xl p-6 text-center">
+          <svg class="w-8 h-8 text-violet mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" /></svg>
+          <p class="font-display text-base mb-1">문의 및 상담</p>
+          <p class="text-xs text-ink/50 leading-relaxed">전문가와 상담 후 예약 및 진행을 확정합니다.</p>
         </div>
-        <div>
-          <label for="phone" class="block text-cream/80 text-sm mb-2">연락처</label>
-          <input id="phone" name="phone" type="tel" required placeholder="010-1234-5678" class="field w-full rounded-lg px-4 py-3 text-sm">
+        <div class="bg-mint/5 rounded-2xl p-6 text-center">
+          <svg class="w-8 h-8 text-mint-dark mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
+          <p class="font-display text-base mb-1">자료 전달</p>
+          <p class="text-xs text-ink/50 leading-relaxed">기획 가이드에 따라 필요한 자료를 전달합니다.</p>
         </div>
-        <div>
-          <label for="email" class="block text-cream/80 text-sm mb-2">이메일</label>
-          <input id="email" name="email" type="email" required placeholder="you@email.com" class="field w-full rounded-lg px-4 py-3 text-sm">
+        <div class="bg-violet/5 rounded-2xl p-6 text-center">
+          <svg class="w-8 h-8 text-violet mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
+          <p class="font-display text-base mb-1">디자인 및 개발</p>
+          <p class="text-xs text-ink/50 leading-relaxed">일정에 맞춰 시안이 제작됩니다.</p>
         </div>
-        <div>
-          <label for="message" class="block text-cream/80 text-sm mb-2">문의 내용</label>
-          <textarea id="message" name="message" rows="4" required placeholder="원하시는 사이트 유형이나 예산, 일정을 알려주세요" class="field w-full rounded-lg px-4 py-3 text-sm resize-none"></textarea>
+        <div class="bg-mint/5 rounded-2xl p-6 text-center">
+          <svg class="w-8 h-8 text-mint-dark mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
+          <p class="font-display text-base mb-1">피드백</p>
+          <p class="text-xs text-ink/50 leading-relaxed">시안 검토 후 수정 및 피드백을 요청합니다.</p>
         </div>
-        <button type="submit" class="btn-primary w-full rounded-full px-6 py-3.5 text-sm font-medium">상담 신청하기</button>
-        <p id="form-success" class="hidden text-mint text-sm pt-2">접수 완료! 24시간 내 연락드립니다.</p>
-        <p id="form-error" class="hidden text-rose-300 text-sm pt-2">접수 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.</p>
-      </form>
+        <div class="bg-violet/5 rounded-2xl p-6 text-center">
+          <svg class="w-8 h-8 text-violet mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" /></svg>
+          <p class="font-display text-base mb-1">제작 완료</p>
+          <p class="text-xs text-ink/50 leading-relaxed">최종 검토 후 홈페이지를 오픈합니다.</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="hidden lg:flex items-center justify-center w-full h-full" style="background:
-        radial-gradient(circle at 30% 25%, rgba(108,92,224,0.35), transparent 45%),
-        radial-gradient(circle at 75% 70%, rgba(51,214,166,0.16), transparent 40%),
-        #171A26;">
-      <span class="font-display italic text-cream/25 text-3xl">Let's build together</span>
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq" class="bg-mist py-24 sm:py-32">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10">
+      <p class="inline-block bg-violet/10 text-violet text-xs tracking-[0.15em] uppercase font-medium px-3 py-1 rounded-full mb-6">FAQ</p>
+      <h2 class="font-display text-3xl sm:text-4xl mb-12">자주 묻는 질문</h2>
+
+      <div class="bg-white rounded-2xl border border-ink/8 divide-y divide-ink/8">
+        <details class="group p-6 sm:p-7">
+          <summary class="flex items-center justify-between gap-4 font-medium text-ink">
+            <span>홈페이지 제작 견적은 어떤 기준으로 산정되나요?</span>
+            <svg class="faq-chevron w-5 h-5 text-ink/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+          </summary>
+          <p class="text-sm text-ink/60 leading-relaxed mt-4">페이지 수와 필요한 기능에 따라 저가형(300,000원~), 스탠다드(800,000원~), 프리미엄(협의 후 견적) 세 가지 요금제로 안내드립니다.</p>
+        </details>
+        <details class="group p-6 sm:p-7">
+          <summary class="flex items-center justify-between gap-4 font-medium text-ink">
+            <span>제작 기간은 얼마나 걸리나요?</span>
+            <svg class="faq-chevron w-5 h-5 text-ink/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+          </summary>
+          <p class="text-sm text-ink/60 leading-relaxed mt-4">저가형 기준 최소 3~5일, 스탠다드 1~2주, 프리미엄은 3~4주 이상 소요됩니다. 정확한 일정은 상담 시 안내드립니다.</p>
+        </details>
+        <details class="group p-6 sm:p-7">
+          <summary class="flex items-center justify-between gap-4 font-medium text-ink">
+            <span>제작 후 A/S는 어떻게 되나요?</span>
+            <svg class="faq-chevron w-5 h-5 text-ink/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+          </summary>
+          <p class="text-sm text-ink/60 leading-relaxed mt-4">오픈 후 30일간 무료 A/S를 제공합니다. 사소한 수정 요청이나 오류 수정은 이 기간 내 무료로 대응해드립니다.</p>
+        </details>
+        <details class="group p-6 sm:p-7">
+          <summary class="flex items-center justify-between gap-4 font-medium text-ink">
+            <span>도메인·호스팅은 누구 소유가 되나요?</span>
+            <svg class="faq-chevron w-5 h-5 text-ink/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+          </summary>
+          <p class="text-sm text-ink/60 leading-relaxed mt-4">제작 완료 후 도메인·코드 등 모든 소유권은 고객님께 이전됩니다.</p>
+        </details>
+        <details class="group p-6 sm:p-7">
+          <summary class="flex items-center justify-between gap-4 font-medium text-ink">
+            <span>카카오톡·네이버폼으로도 상담이 가능한가요?</span>
+            <svg class="faq-chevron w-5 h-5 text-ink/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+          </summary>
+          <p class="text-sm text-ink/60 leading-relaxed mt-4">네, 편하신 채널로 문의 주시면 됩니다. 아래 문의 섹션에서 카카오톡, 네이버폼, 이메일, 자체 문의폼 중 원하시는 방법으로 연락 주세요.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT / CONSULTATION (floating card) ===================== -->
+  <section id="contact" class="bg-white py-20 sm:py-28">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="rounded-[2rem] overflow-hidden bg-ink grid grid-cols-1 lg:grid-cols-2">
+        <div class="px-6 sm:px-12 lg:px-16 py-16 sm:py-20">
+          <p class="text-mint text-xs tracking-[0.25em] uppercase font-medium mb-4">Get In Touch</p>
+          <h2 class="font-display text-cream text-3xl sm:text-4xl mb-4">지금 바로 상담을 신청하세요</h2>
+          <p class="text-creamMuted text-sm sm:text-base mb-10 max-w-md">
+            편하신 채널로 문의 주시면 24시간 내 답변드립니다. 아래 폼 작성도 가능해요.
+          </p>
+
+          <div class="flex flex-wrap gap-3 mb-12">
+            <a href="https://pf.kakao.com/_xxxxxxx" target="_blank" rel="noopener">
+              <button class="btn-ghost-dark px-5 py-3 rounded-full text-sm font-medium">카카오톡 상담하기</button>
+            </a>
+            <a href="https://form.naver.com/response/xxxxxxxxxxxxxxxxxxxx" target="_blank" rel="noopener">
+              <button class="btn-ghost-dark px-5 py-3 rounded-full text-sm font-medium">네이버폼으로 문의하기</button>
+            </a>
+            <a href="mailto:tockddn5@gmail.com">
+              <button class="btn-ghost-dark px-5 py-3 rounded-full text-sm font-medium">이메일 문의</button>
+            </a>
+          </div>
+
+          <form id="consultation-form" class="space-y-5 max-w-md" novalidate>
+            <div>
+              <label for="name" class="block text-cream/80 text-sm mb-2">이름</label>
+              <input id="name" name="name" type="text" required placeholder="홍길동" class="field w-full rounded-lg px-4 py-3 text-sm">
+            </div>
+            <div>
+              <label for="phone" class="block text-cream/80 text-sm mb-2">연락처</label>
+              <input id="phone" name="phone" type="tel" required placeholder="010-1234-5678" class="field w-full rounded-lg px-4 py-3 text-sm">
+            </div>
+            <div>
+              <label for="email" class="block text-cream/80 text-sm mb-2">이메일</label>
+              <input id="email" name="email" type="email" required placeholder="you@email.com" class="field w-full rounded-lg px-4 py-3 text-sm">
+            </div>
+            <div>
+              <label for="message" class="block text-cream/80 text-sm mb-2">문의 내용</label>
+              <textarea id="message" name="message" rows="4" required placeholder="원하시는 사이트 유형이나 예산, 일정을 알려주세요" class="field w-full rounded-lg px-4 py-3 text-sm resize-none"></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full rounded-full px-6 py-3.5 text-sm font-medium">상담 신청하기</button>
+            <p id="form-success" class="hidden text-mint text-sm pt-2">접수 완료! 24시간 내 연락드립니다.</p>
+            <p id="form-error" class="hidden text-rose-300 text-sm pt-2">접수 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.</p>
+          </form>
+        </div>
+
+        <div class="hidden lg:flex items-center justify-center w-full h-full" style="background:
+            radial-gradient(circle at 30% 25%, rgba(108,92,224,0.35), transparent 45%),
+            radial-gradient(circle at 75% 70%, rgba(51,214,166,0.16), transparent 40%),
+            #171A26;">
+          <span class="font-display italic text-cream/25 text-3xl">Let's build together</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ===================== FOOTER ===================== -->
-  <footer class="bg-inkSoft border-t border-inkLine">
+  <footer class="bg-white border-t border-ink/8">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
       <div>
         <a href="#top" class="logo-mark">
@@ -444,23 +842,24 @@
             <span class="logo-underline" style="height:2px;"></span>
           </span>
         </a>
-        <p class="text-creamMuted text-sm mt-2 max-w-xs">브랜드의 첫인상을 완성하는 홈페이지 제작 파트너</p>
+        <p class="text-ink/60 text-sm mt-2 max-w-xs">브랜드의 첫인상을 완성하는 홈페이지 제작 파트너</p>
       </div>
-      <nav class="flex flex-wrap gap-x-8 gap-y-3 text-sm text-creamMuted">
-        <a href="#services" class="hover:text-cream transition-colors duration-200">서비스</a>
-        <a href="#portfolio" class="hover:text-cream transition-colors duration-200">포트폴리오</a>
-        <a href="#testimonials" class="hover:text-cream transition-colors duration-200">고객 후기</a>
-        <a href="#contact" class="hover:text-cream transition-colors duration-200">문의</a>
+      <nav class="flex flex-wrap gap-x-8 gap-y-3 text-sm text-ink/60">
+        <a href="#services" class="hover:text-ink transition-colors duration-200">서비스</a>
+        <a href="#portfolio" class="hover:text-ink transition-colors duration-200">포트폴리오</a>
+        <a href="#testimonials" class="hover:text-ink transition-colors duration-200">약속</a>
+        <a href="#faq" class="hover:text-ink transition-colors duration-200">FAQ</a>
+        <a href="#contact" class="hover:text-ink transition-colors duration-200">문의</a>
       </nav>
-      <div class="text-sm text-creamMuted">
+      <div class="text-sm text-ink/60">
         <p>tockddn5@gmail.com</p>
         <p class="mt-1">평일 10:00–19:00</p>
       </div>
     </div>
-    <div class="border-t border-inkLine">
-      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-creamMuted/70">
+    <div class="border-t border-ink/8">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-ink/40">
         <p>&copy; 2026 BuildOn. All rights reserved.</p>
-        <a href="#" class="hover:text-creamMuted transition-colors duration-200">개인정보처리방침</a>
+        <a href="#" class="hover:text-ink/60 transition-colors duration-200">개인정보처리방침</a>
       </div>
     </div>
   </footer>
@@ -493,18 +892,6 @@
         iconClose.classList.add('hidden');
       });
     });
-
-    // header background on scroll
-    const header = document.getElementById('site-header');
-    const onScroll = () => {
-      if (window.scrollY > 40) {
-        header.classList.add('bg-ink/90', 'backdrop-blur', 'border-b', 'border-inkLine');
-      } else {
-        header.classList.remove('bg-ink/90', 'backdrop-blur', 'border-b', 'border-inkLine');
-      }
-    };
-    document.addEventListener('scroll', onScroll);
-    onScroll();
 
     // consultation form -> Supabase 저장 + 이메일 알림
     // 아래 URL/publishable key는 Supabase 설계상 클라이언트에 공개되는 값이며,
@@ -554,12 +941,40 @@
 
     // scroll reveal
     const revealEls = document.querySelectorAll('.fade-up');
-    const observer = new IntersectionObserver((entries) => {
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('in-view');
       });
     }, { threshold: 0.15 });
-    revealEls.forEach(el => observer.observe(el));
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // stat count-up (Intro section)
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const countEls = document.querySelectorAll('[data-countup]');
+    const animateCount = (el) => {
+      const target = parseInt(el.dataset.target, 10);
+      if (prefersReducedMotion) {
+        el.textContent = target;
+        return;
+      }
+      const duration = 900;
+      const start = performance.now();
+      const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        el.textContent = Math.round(target * progress);
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          countObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    countEls.forEach(el => countObserver.observe(el));
   </script>
 </body>
 </html>
