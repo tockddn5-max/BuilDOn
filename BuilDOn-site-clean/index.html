@@ -158,8 +158,13 @@
   .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 240ms; }
   .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 360ms; }
   .reveal-stagger.is-visible > *:nth-child(n+5) { transition-delay: 480ms; }
+  /* 개별 관찰 요소: 각자 화면에 들어올 때 지정한 방향에서 날아옴 */
+  .reveal-side { opacity: 0; transition: opacity 1100ms ease, transform 1200ms cubic-bezier(0.22,1,0.36,1); will-change: transform, opacity; }
+  .reveal-side.from-left { transform: translateX(-72px); }
+  .reveal-side.from-right { transform: translateX(72px); }
+  .reveal-side.is-visible { opacity: 1; transform: translateX(0); }
   @media (prefers-reduced-motion: reduce) {
-    .reveal-up, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .reveal-up, .reveal-stagger > *, .reveal-side { opacity: 1 !important; transform: none !important; transition: none !important; }
   }
 
   /* ---- hero marquee ---- */
@@ -198,7 +203,7 @@
   .service-card:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(109,40,217,0.4); }
   .service-card:active { transform: scale(1.01); }
 </style>
-<noscript><style>.reveal-up,.reveal-stagger>*{opacity:1!important;transform:none!important;}</style></noscript>
+<noscript><style>.reveal-up,.reveal-stagger>*,.reveal-side{opacity:1!important;transform:none!important;}</style></noscript>
 </head>
 <body class="font-sans text-ink antialiased">
 
@@ -504,8 +509,8 @@
         <h2 class="font-display font-extrabold text-2xl sm:text-5xl">BuildOn은 <span class="text-violet">4가지가</span> 다릅니다.</h2>
       </div>
 
-      <div class="space-y-20 sm:space-y-28 reveal-stagger">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div class="space-y-20 sm:space-y-28">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center reveal-side from-left">
           <div class="rounded-2xl aspect-[1407/768] overflow-hidden order-2 lg:order-1">
             <img src="Difference/1.png" alt="스타터형·기본형·프리미엄 제작 유형 안내 화면" class="w-full h-full object-cover">
           </div>
@@ -516,7 +521,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center reveal-side from-right">
           <div>
             <p class="inline-flex items-center gap-2 text-xs text-mint-dark font-medium mb-3"><span class="w-6 h-6 rounded-full bg-mint/[0.18] flex items-center justify-center text-[11px]">2</span>실제 코드 기반 제작</p>
             <h3 class="font-display font-extrabold text-3xl sm:text-4xl mb-4">노코드 툴이 아닌,<br><span class="text-mint-dark">실제 코드</span>로 제작합니다.</h3>
@@ -527,7 +532,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center reveal-side from-left">
           <div class="rounded-2xl aspect-[1375/768] overflow-hidden order-2 lg:order-1">
             <img src="Difference/free-as-30days.png" alt="30일 무료 A/S 및 체계적인 문의 관리 화면" class="w-full h-full object-cover">
           </div>
@@ -538,7 +543,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center reveal-side from-right">
           <div>
             <p class="inline-flex items-center gap-2 text-xs text-mint-dark font-medium mb-3"><span class="w-6 h-6 rounded-full bg-mint/[0.18] flex items-center justify-center text-[11px]">4</span>대표와 직접 소통</p>
             <h3 class="font-display font-extrabold text-3xl sm:text-4xl mb-4">중간 담당자 없이,<br><span class="text-mint-dark">대표와 직접</span> 소통합니다.</h3>
@@ -825,7 +830,7 @@
 
     // scroll reveal (reveal-up = 세로 상승 / reveal-stagger = 좌우 교차 진입)
     try {
-      var _revealTargets = document.querySelectorAll('.reveal-up, .reveal-stagger');
+      var _revealTargets = document.querySelectorAll('.reveal-up, .reveal-stagger, .reveal-side');
       if ('IntersectionObserver' in window) {
         var _revealIO = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
@@ -837,7 +842,7 @@
         _revealTargets.forEach(function (el) { el.classList.add('is-visible'); });
       }
     } catch (e) {
-      document.querySelectorAll('.reveal-up, .reveal-stagger').forEach(function (el) { el.classList.add('is-visible'); });
+      document.querySelectorAll('.reveal-up, .reveal-stagger, .reveal-side').forEach(function (el) { el.classList.add('is-visible'); });
     }
 
     // stat count-up (Intro section)
