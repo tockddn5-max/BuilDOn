@@ -1,0 +1,5 @@
+# Keep worker scripts LF so Windows CRLF doesn't corrupt the dispatcher.
+# (jq CRLF output is handled separately in call_worker.sh via `tr -d '\r'`.)
+*.sh   text eol=lf
+*.py   text eol=lf
+_shared/backends.json text eol=lf

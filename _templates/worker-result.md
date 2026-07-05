@@ -7,12 +7,23 @@ worker: claude-main | codex-main | codex-critic | gemini
 task: [작업명]
 status: draft | complete | failed
 completed_at: <YYYY-MM-DD HH:MM>   # date +"%Y-%m-%d %H:%M"
+verdict: PASS | CHANGES_NEEDED | N/A   # 리뷰어(codex-critic/gemini) 필수. 생성계열은 N/A
 tokens_used: (선택)
 ```
 
 ## Summary
 
 한 문장. 무엇을 했는가.
+
+## Findings (리뷰어 공통 포맷 — Fan-in 기계 병합용)
+
+<!-- codex-critic·gemini는 아래 표 형식으로 통일해 출력. 생성계열 워커는 생략 가능. -->
+
+| severity | file:line (또는 대상) | 문제 | 개선안(1줄) |
+|---|---|---|---|
+| Critical/Major/Minor | index.html:216 | 무엇이·왜 | 어떻게 |
+
+<!-- verdict 규칙: Critical 또는 Major가 하나라도 있으면 CHANGES_NEEDED. Minor만이면 PASS. -->
 
 ## Output
 
