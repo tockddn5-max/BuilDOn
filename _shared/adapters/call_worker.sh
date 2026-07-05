@@ -46,9 +46,11 @@ rec="$(jq -c --arg r "$ROLE" '.workers[$r] // empty' "$BACKENDS")"
 
 # 폴백 가용성 사전 점검(경고만): primary가 죽고 나서야 폴백 불가를 아는 것을 방지
 while IFS= read -r _fe; do
-  [ -n "$_fe" ] && [ -z "${!_fe:-}" ] && \
+  [ -n "$_fe" ] || continue
+  eval "_feval=\${$_fe:-}"                       # 간접확장(${!x:-})이 일부 bash에서 실패 → eval로 대체
+  [ -z "$_feval" ] && \
     echo "call_worker: 경고 — 폴백 필수 env 미설정: $_fe (primary 실패 시 폴백 불가)" >&2
-done < <(jq -r '.fallbacks[]?.api.required_env[]? // empty' <<<"$rec")
+done < <(jq -r '.fallbacks[]?.api.required_env[]? // empty' <<<"$rec" | tr -d '\r')
 
 redact() { sed -E 's/[A-Za-z0-9_-]{32,}/[REDACTED]/g'; }
 
@@ -75,10 +77,10 @@ run_backend() {
   local -a cmd=()
   if [ "$ctype" = "cli" ]; then
     local command_bin args_json a
-    command_bin="$(jq -r '.cli.command' <<<"$spec")"
-    case "$command_bin" in agy|codex|claude) ;; *) die "command allowlist 위반: $command_bin" 7;; esac
+    command_bin="$(jq -r '.cli.command' <<<"$spec" | tr -d '\r')"
+    case "$command_bin" in agy|gemini|codex|claude) ;; *) die "command allowlist 위반: $command_bin" 7;; esac
     cmd+=("$command_bin")
-    args_json="$(jq -r '.cli.args_template[]' <<<"$spec")"   # jq 실패 시 set -e 트리거
+    args_json="$(jq -r '.cli.args_template[]' <<<"$spec" | tr -d '\r')"   # tr: Windows jq CRLF 제거. jq 실패 시 set -e 트리거
     while IFS= read -r a; do
       case "$a" in
         "@brief")         cmd+=("$BRIEF");;
@@ -107,14 +109,15 @@ run_backend() {
     [ -f "$ROOT/_shared/$ref" ] || die "api 스크립트 없음: $ref" 4
     while IFS= read -r reqenv; do
       [ -n "$reqenv" ] || continue
-      if [ -z "${!reqenv:-}" ]; then
+      eval "_reqval=\${$reqenv:-}"
+      if [ -z "$_reqval" ]; then
         # die 대신 에러 envelope 반환: 폴백 체인에서 실패 사유가 최종 envelope에 남도록
         jq -n --arg model "$model" --arg e "$reqenv" \
           '{status:"error", exit_code:4, backend:"api", model:$model,
             duration_s:0, stdout:"", stderr_sanitized:("필수 env 없음: " + $e + " — 폴백 사용 불가")}'
         return 4
       fi
-    done < <(jq -r '.api.required_env[]? // empty' <<<"$spec")
+    done < <(jq -r '.api.required_env[]? // empty' <<<"$spec" | tr -d '\r')
     brief_pass="$(jq -r '.api.brief_pass // "arg1"' <<<"$spec")"
     cmd+=("bash" "$ROOT/_shared/$ref")
     [ "$brief_pass" = "arg1" ] && cmd+=("$BRIEF")

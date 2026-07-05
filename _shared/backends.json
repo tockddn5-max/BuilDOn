@@ -47,8 +47,8 @@
       "call_type": "cli",
       "brief_mode": "content",
       "cli": {
-        "command": "agy",
-        "args_template": ["--prompt", "@brief_content"],
+        "command": "gemini",
+        "args_template": ["--prompt", "@brief_content", "--approval-mode", "plan", "--skip-trust"],
         "non_interactive": { "stdin": "/dev/null", "no_tty": true, "on_permission_prompt": "fail" }
       },
       "cwd_policy": "isolated_tmp",
