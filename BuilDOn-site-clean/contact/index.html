@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프로젝트 의뢰 | BuildOn</title>
+<meta name="description" content="BuildOn 프로젝트 의뢰 — 어떤 홈페이지를 만들고 싶은지 알려주시면 영업일 기준 1일 이내에 안내서와 견적서를 보내드립니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/variable/pretendardvariable.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      colors: {
+        ink: '#0A0F1A', inkSoft: '#111827', navy: '#07111f',
+        cream: '#F6F3EC', creamMuted: '#B7BACB', paper: '#FFFFFF',
+        violet: { DEFAULT: '#6D28D9', dark: '#5B21B6', light: '#A78BFA' },
+        mint: { DEFAULT: '#33D6A6', dark: '#22B78D' },
+      },
+      fontFamily: { display: ['"Pretendard Variable"','sans-serif'], sans: ['"Pretendard Variable"','Inter','sans-serif'] },
+    }},
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: '"Pretendard Variable"', sans-serif; background-color: #07111f; }
+  .font-display { font-weight: 700; letter-spacing: -0.02em; }
+
+  .btn-primary {
+    background-color: #6D28D9; color: #F6F3EC;
+    transition: transform 200ms ease-out, background-color 200ms ease-out, box-shadow 200ms ease-out, opacity 200ms ease-out;
+    box-shadow: 0 20px 40px -14px rgba(109,40,217,0.45), 0 8px 20px -10px rgba(17,19,28,0.35);
+  }
+  .btn-primary:hover { background-color: #5B21B6; transform: scale(1.03); }
+  .btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(109,40,217,0.5), 0 0 0 5px #07111f; }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .btn-ghost {
+    background-color: transparent; color: #B7BACB; border: 1px solid rgba(246,243,236,0.20);
+    transition: border-color 180ms ease-out, color 180ms ease-out, background-color 180ms ease-out;
+  }
+  .btn-ghost:hover { border-color: rgba(246,243,236,0.4); color: #F6F3EC; }
+  .btn-ghost:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(246,243,236,0.15); }
+
+  .field {
+    background-color: rgba(246,243,236,0.05); border: 1px solid rgba(246,243,236,0.16); color: #F6F3EC;
+    transition: border-color 150ms ease-out, background-color 150ms ease-out, box-shadow 150ms ease-out;
+  }
+  .field::placeholder { color: #6B7180; }
+  .field:hover { border-color: rgba(246,243,236,0.30); }
+  .field:focus { outline: none; border-color: #A78BFA; box-shadow: 0 0 0 3px rgba(109,40,217,0.28); background-color: rgba(246,243,236,0.08); }
+  .field.invalid { border-color: #F87171; box-shadow: 0 0 0 3px rgba(248,113,113,0.18); }
+  select.field option { color: #11131C; }
+
+  /* step transitions — 과하지 않은 fade/slide */
+  .form-step { opacity: 0; transform: translateY(10px); transition: opacity 320ms ease, transform 320ms ease; position: absolute; inset: 0 0 auto 0; pointer-events: none; }
+  .form-step.active { opacity: 1; transform: translateY(0); position: relative; pointer-events: auto; }
+  .steps-wrap { position: relative; }
+  @media (prefers-reduced-motion: reduce) { .form-step { transition: none; } }
+
+  /* step indicator */
+  .step-dot { transition: color 200ms ease, opacity 200ms ease; }
+  .step-line-fill { transition: width 320ms ease; }
+
+  /* modal */
+  .modal-backdrop { transition: opacity 200ms ease; }
+  .modal-card { transition: opacity 220ms ease, transform 220ms ease; }
+  .modal-hidden .modal-backdrop { opacity: 0; }
+  .modal-hidden .modal-card { opacity: 0; transform: translateY(12px); }
+  .privacy-body { scrollbar-width: thin; }
+</style>
+</head>
+<body class="text-cream antialiased" style="background:
+    radial-gradient(circle at 82% 12%, rgba(109,40,217,0.28), transparent 42%),
+    radial-gradient(circle at 8% 88%, rgba(51,214,166,0.10), transparent 40%),
+    #07111f;">
+
+  <!-- Header -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-[#07111f]/85 backdrop-blur border-b border-white/8">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
+      <a href="/" class="flex items-center gap-2" aria-label="BuildOn 홈으로">
+        <span class="font-display text-cream text-xl">Build<span class="text-violet-light">On</span></span>
+      </a>
+      <a href="/" class="text-creamMuted text-sm hover:text-cream transition-colors">← 홈으로</a>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-14 sm:py-20 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+        <!-- LEFT: 안내 -->
+        <div class="lg:sticky lg:top-28">
+          <p class="text-mint text-xs tracking-[0.28em] uppercase font-medium mb-5">Contact</p>
+          <h1 class="font-display text-cream text-3xl sm:text-4xl lg:text-5xl leading-tight mb-8">프로젝트 의뢰</h1>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-7 mb-6">
+            <p class="text-cream text-lg sm:text-xl font-medium leading-relaxed">📌 어떤 홈페이지를<br>만들고 싶은가요?</p>
+          </div>
+          <p class="text-creamMuted text-sm sm:text-base leading-relaxed max-w-sm">
+            우측에서 의뢰 내용을 작성해주세요.<br>
+            영업일 기준 1일 이내에 안내서와 견적서를 함께 보내드립니다.
+          </p>
+        </div>
+
+        <!-- RIGHT: 폼 -->
+        <div class="rounded-[1.75rem] border border-white/10 bg-white/[0.035] p-6 sm:p-9 lg:p-10 shadow-2xl shadow-black/30">
+          <!-- step indicator -->
+          <div class="mb-8">
+            <div class="flex items-center justify-between text-sm mb-3">
+              <span id="ind-1" class="step-dot font-medium text-cream">01 기본 정보</span>
+              <span id="ind-2" class="step-dot font-medium text-creamMuted/60">02 추가정보</span>
+            </div>
+            <div class="h-1 rounded-full bg-white/10 overflow-hidden">
+              <div id="step-line" class="step-line-fill h-full rounded-full bg-violet" style="width:50%"></div>
+            </div>
+          </div>
+
+          <form id="contact-form" novalidate>
+            <div class="steps-wrap">
+              <!-- STEP 01 -->
+              <section id="step-1" class="form-step active" aria-label="기본 정보">
+                <div class="mb-7">
+                  <p class="text-violet-light font-display text-2xl">01</p>
+                  <h2 class="font-display text-cream text-xl sm:text-2xl mt-1 mb-2">기본 정보</h2>
+                  <p class="text-creamMuted text-sm">문의사항 회신을 위한 기본 정보를 알려주세요.</p>
+                </div>
+
+                <div class="space-y-5">
+                  <div>
+                    <label for="company" class="block text-cream/80 text-sm mb-2">회사 / 단체명</label>
+                    <input id="company" name="company" type="text" required placeholder="회사명을 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
+                    <p class="err hidden text-rose-300 text-xs mt-1.5"></p>
+                  </div>
+                  <div>
+                    <label for="name" class="block text-cream/80 text-sm mb-2">직책 / 성함</label>
+                    <input id="name" name="name" type="text" required placeholder="직책 및 성함을 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
+                    <p class="err hidden text-rose-300 text-xs mt-1.5"></p>
+                  </div>
+                  <div>
+                    <label for="phone" class="block text-cream/80 text-sm mb-2">연락처</label>
+                    <input id="phone" name="phone" type="tel" required placeholder="연락처를 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
+                    <p class="err hidden text-rose-300 text-xs mt-1.5"></p>
+                  </div>
+                  <div>
+                    <label for="email" class="block text-cream/80 text-sm mb-2">이메일</label>
+                    <input id="email" name="email" type="email" required placeholder="이메일을 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
+                    <p class="err hidden text-rose-300 text-xs mt-1.5"></p>
+                  </div>
+                  <div>
+                    <label for="intro" class="block text-cream/80 text-sm mb-2">회사 및 비즈니스 간단 소개</label>
+                    <textarea id="intro" name="intro" rows="4" placeholder="회사 및 비즈니스를 소개해주세요." class="field w-full rounded-xl px-4 py-3 text-sm resize-none" style="min-height:120px"></textarea>
+                  </div>
+                </div>
+
+                <div class="flex justify-end mt-8">
+                  <button type="button" id="to-step-2" class="btn-primary w-full sm:w-auto px-8 h-12 rounded-full text-sm font-medium inline-flex items-center justify-center gap-2">다음 <span aria-hidden="true">→</span></button>
+                </div>
+              </section>
+
+              <!-- STEP 02 -->
+              <section id="step-2" class="form-step" aria-label="추가정보">
+                <div class="mb-7">
+                  <p class="text-violet-light font-display text-2xl">02</p>
+                  <h2 class="font-display text-cream text-xl sm:text-2xl mt-1 mb-2">추가정보</h2>
+                  <p class="text-creamMuted text-sm">프로젝트 진행에 필요한 추가 내용을 알려주세요.</p>
+                </div>
+
+                <div class="space-y-5">
+                  <div>
+                    <label for="budget" class="block text-cream/80 text-sm mb-2">사용 가능한 예산</label>
+                    <select id="budget" name="budget" class="field w-full rounded-xl px-4 h-12 text-sm">
+                      <option value="미정" selected>미정</option>
+                      <option value="100만 원 이하">100만 원 이하</option>
+                      <option value="100만 원 ~ 300만 원">100만 원 ~ 300만 원</option>
+                      <option value="300만 원 ~ 500만 원">300만 원 ~ 500만 원</option>
+                      <option value="500만 원 이상">500만 원 이상</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="refUrl" class="block text-cream/80 text-sm mb-2">참고하고 싶은 홈페이지 URL</label>
+                    <input id="refUrl" name="refUrl" type="text" placeholder="URL을 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
+                  </div>
+                  <div>
+                    <label for="reason" class="block text-cream/80 text-sm mb-2">BuildOn에게 의뢰주신 이유</label>
+                    <textarea id="reason" name="reason" rows="4" placeholder="자유롭게 작성해주세요." class="field w-full rounded-xl px-4 py-3 text-sm resize-none" style="min-height:120px"></textarea>
+                  </div>
+
+                  <div class="pt-1">
+                    <label class="flex items-start gap-3 cursor-pointer select-none">
+                      <input id="agree" name="agree" type="checkbox" class="mt-0.5 h-5 w-5 rounded border-white/30 bg-transparent accent-violet cursor-pointer">
+                      <span class="text-sm text-cream/85">개인정보 수집 및 이용에 동의합니다.
+                        <button type="button" id="open-privacy" class="ml-1 underline text-violet-light hover:text-cream transition-colors">전문보기</button>
+                      </span>
+                    </label>
+                    <p id="agree-err" class="hidden text-rose-300 text-xs mt-2">개인정보 수집 및 이용에 동의해주세요.</p>
+                  </div>
+                </div>
+
+                <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between mt-8 gap-3">
+                  <button type="button" id="to-step-1" class="btn-ghost w-full sm:w-auto px-6 h-12 rounded-full text-sm font-medium">이전</button>
+                  <button type="submit" id="submit-btn" class="btn-primary w-full sm:w-auto px-8 h-12 rounded-full text-sm font-medium">제출하기</button>
+                </div>
+              </section>
+            </div>
+          </form>
+
+          <!-- 성공 메시지 -->
+          <div id="success-box" class="hidden text-center py-8">
+            <div class="mx-auto mb-5 h-14 w-14 rounded-full bg-mint/15 flex items-center justify-center">
+              <svg class="w-7 h-7 text-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h2 class="font-display text-cream text-xl mb-2">문의가 접수되었습니다.</h2>
+            <p class="text-creamMuted text-sm">영업일 기준 1일 이내에 안내드리겠습니다.</p>
+            <a href="/" class="inline-block mt-7"><button class="btn-ghost px-6 h-11 rounded-full text-sm font-medium">홈으로 돌아가기</button></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- 개인정보 처리 방침 모달 -->
+  <div id="privacy-modal" class="modal-hidden hidden fixed inset-0 z-50" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+    <div class="modal-backdrop absolute inset-0 bg-black/70" data-close></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4 sm:p-6">
+      <div class="modal-card relative w-full max-w-lg bg-paper text-ink rounded-2xl shadow-2xl flex flex-col" style="max-height:85vh">
+        <div class="flex items-center justify-between px-6 py-5 border-b border-ink/10">
+          <h2 id="privacy-title" class="font-display text-ink text-lg">개인정보 처리 방침</h2>
+          <button type="button" id="close-privacy" aria-label="닫기" class="text-ink/50 hover:text-ink transition-colors rounded-full p-1">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="privacy-body overflow-y-auto px-6 py-6 text-sm leading-relaxed text-ink/80 space-y-6">
+          <p>BuildOn은 상담 신청 및 프로젝트 의뢰 응대를 위해 아래와 같이 개인정보를 수집 및 이용합니다.</p>
+          <div>
+            <h3 class="font-medium text-ink mb-2">1. 수집 항목</h3>
+            <ul class="list-disc pl-5 space-y-1 text-ink/70">
+              <li>회사 / 단체명</li><li>직책 / 성함</li><li>연락처</li><li>이메일</li>
+              <li>회사 및 비즈니스 소개</li><li>예산 정보</li><li>참고 URL</li><li>의뢰 사유 및 기타 문의 내용</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-medium text-ink mb-2">2. 수집 및 이용 목적</h3>
+            <ul class="list-disc pl-5 space-y-1 text-ink/70">
+              <li>상담 신청 확인</li><li>프로젝트 의뢰 내용 검토</li><li>견적 및 안내서 발송</li>
+              <li>문의사항 회신</li><li>서비스 제공을 위한 사전 커뮤니케이션</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-medium text-ink mb-2">3. 보유 및 이용 기간</h3>
+            <p class="text-ink/70">수집된 개인정보는 상담 및 프로젝트 검토 목적 달성 후 지체 없이 파기합니다. 단, 관계 법령에 따라 보관이 필요한 경우 해당 기간 동안 보관할 수 있습니다.</p>
+          </div>
+          <div>
+            <h3 class="font-medium text-ink mb-2">4. 동의 거부 권리</h3>
+            <p class="text-ink/70">이용자는 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있습니다. 다만 동의하지 않을 경우 상담 신청 및 회신이 제한될 수 있습니다.</p>
+          </div>
+        </div>
+        <div class="px-6 py-4 border-t border-ink/10 text-right">
+          <button type="button" id="agree-and-close" class="btn-primary px-6 h-11 rounded-full text-sm font-medium">동의하고 닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var form = document.getElementById('contact-form');
+      var step1 = document.getElementById('step-1'), step2 = document.getElementById('step-2');
+      var ind1 = document.getElementById('ind-1'), ind2 = document.getElementById('ind-2');
+      var line = document.getElementById('step-line');
+      var successBox = document.getElementById('success-box');
+
+      function setStep(n) {
+        step1.classList.toggle('active', n === 1);
+        step2.classList.toggle('active', n === 2);
+        ind1.className = 'step-dot font-medium ' + (n === 1 ? 'text-cream' : 'text-creamMuted/60');
+        ind2.className = 'step-dot font-medium ' + (n === 2 ? 'text-cream' : 'text-creamMuted/60');
+        line.style.width = n === 1 ? '50%' : '100%';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      var required1 = [
+        { id: 'company', msg: '회사 / 단체명을 입력해주세요.' },
+        { id: 'name', msg: '직책 / 성함을 입력해주세요.' },
+        { id: 'phone', msg: '연락처를 입력해주세요.' },
+        { id: 'email', msg: '이메일을 입력해주세요.', email: true },
+      ];
+      function showErr(el, msg) {
+        el.classList.add('invalid');
+        var p = el.parentElement.querySelector('.err');
+        if (p) { p.textContent = msg; p.classList.remove('hidden'); }
+      }
+      function clearErr(el) {
+        el.classList.remove('invalid');
+        var p = el.parentElement.querySelector('.err');
+        if (p) p.classList.add('hidden');
+      }
+      function validateStep1() {
+        var ok = true;
+        required1.forEach(function (f) {
+          var el = document.getElementById(f.id); var v = el.value.trim();
+          clearErr(el);
+          if (!v) { showErr(el, f.msg); ok = false; return; }
+          if (f.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { showErr(el, '올바른 이메일 형식을 입력해주세요.'); ok = false; }
+        });
+        return ok;
+      }
+      ['company','name','phone','email'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', function () { clearErr(this); });
+      });
+
+      document.getElementById('to-step-2').addEventListener('click', function () { if (validateStep1()) setStep(2); });
+      document.getElementById('to-step-1').addEventListener('click', function () { setStep(1); });
+
+      // 개인정보 동의 / 모달
+      var agree = document.getElementById('agree');
+      var agreeErr = document.getElementById('agree-err');
+      var modal = document.getElementById('privacy-modal');
+      var lastFocus = null;
+      function openModal() {
+        lastFocus = document.activeElement;
+        modal.classList.remove('hidden');
+        requestAnimationFrame(function () { modal.classList.remove('modal-hidden'); });
+        document.getElementById('close-privacy').focus();
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        modal.classList.add('modal-hidden');
+        setTimeout(function () { modal.classList.add('hidden'); document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }, 200);
+      }
+      document.getElementById('open-privacy').addEventListener('click', openModal);
+      document.getElementById('close-privacy').addEventListener('click', closeModal);
+      document.getElementById('agree-and-close').addEventListener('click', function () { agree.checked = true; agreeErr.classList.add('hidden'); closeModal(); });
+      modal.querySelectorAll('[data-close]').forEach(function (el) { el.addEventListener('click', closeModal); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+      agree.addEventListener('change', function () { if (agree.checked) agreeErr.classList.add('hidden'); });
+
+      // 제출 — 기존 Supabase + /api/notify 로직 재사용(필드 매핑), 실패해도 UX 방어
+      var SUPABASE_URL = 'https://qbcymytrarkgrukkafab.supabase.co';
+      var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_dQ-a4sXaC8VyXT8UtxRY3g_gJDBlBuA';
+      var submitBtn = document.getElementById('submit-btn');
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (!validateStep1()) { setStep(1); return; }
+        if (!agree.checked) { agreeErr.classList.remove('hidden'); return; }
+        submitBtn.disabled = true;
+
+        var g = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+        var message =
+          '[회사/단체] ' + g('company') + '\n' +
+          '[소개] ' + g('intro') + '\n' +
+          '[예산] ' + g('budget') + '\n' +
+          '[참고 URL] ' + g('refUrl') + '\n' +
+          '[의뢰 사유] ' + g('reason');
+        var payload = { name: g('name'), phone: g('phone'), email: g('email'), message: message };
+
+        // 저장·알림은 백그라운드 처리 — 접수 안내는 즉시 확정(네트워크에 막히지 않음)
+        try {
+          if (window.supabase && supabase.createClient) {
+            var client = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+            client.from('consultations').insert(payload).then(function () {}, function () {});
+          }
+        } catch (err) { /* 저장 실패해도 접수 안내는 진행 */ }
+        fetch('/api/notify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function () {});
+
+        form.classList.add('hidden');
+        document.querySelector('.steps-wrap') && (document.querySelector('.steps-wrap').style.display = 'none');
+        successBox.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>
