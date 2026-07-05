@@ -145,14 +145,19 @@
   html, body { overflow-x: hidden; }
   .reveal-up { opacity: 0; transform: translateY(32px); transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22,1,0.36,1); }
   .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
-  .reveal-stagger > * { opacity: 0; transition: opacity 500ms ease, transform 520ms cubic-bezier(0.16,1,0.3,1); will-change: transform, opacity; }
+  .reveal-stagger > * { opacity: 0; transition: opacity 1100ms ease, transform 1200ms cubic-bezier(0.22,1,0.36,1); will-change: transform, opacity; }
   .reveal-stagger > *:nth-child(odd)  { transform: translateX(-72px); }
   .reveal-stagger > *:nth-child(even) { transform: translateX(72px); }
+  /* 한 줄에 3개인 그리드: 양옆 열만 날아오고 가운데는 페이드만 */
+  .reveal-stagger.reveal-cols-3 > *:nth-child(3n+1) { transform: translateX(-72px); }
+  .reveal-stagger.reveal-cols-3 > *:nth-child(3n+2) { transform: none; }
+  .reveal-stagger.reveal-cols-3 > *:nth-child(3n+3) { transform: translateX(72px); }
   .reveal-stagger.is-visible > * { opacity: 1; transform: translateX(0); }
-  .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 70ms; }
-  .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 140ms; }
-  .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 210ms; }
-  .reveal-stagger.is-visible > *:nth-child(n+5) { transition-delay: 280ms; }
+  .reveal-stagger.reveal-cols-3.is-visible > * { transform: none; }
+  .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 120ms; }
+  .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 240ms; }
+  .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 360ms; }
+  .reveal-stagger.is-visible > *:nth-child(n+5) { transition-delay: 480ms; }
   @media (prefers-reduced-motion: reduce) {
     .reveal-up, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
   }
@@ -350,7 +355,7 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 sm:gap-x-5 gap-y-8 mt-14 reveal-stagger">
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 sm:gap-x-5 gap-y-8 mt-14 reveal-stagger reveal-cols-3">
         <div>
           <p class="text-xs text-ink/45 mb-2">카페 · 예시</p>
           <article class="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-violet/30 to-ink">
@@ -394,7 +399,7 @@
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 reveal-stagger">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 reveal-stagger reveal-cols-3">
         <a href="/contact" class="service-card relative block bg-white rounded-2xl shadow-card border border-ink/8 p-8 overflow-hidden">
           <p class="text-xs tracking-[0.2em] uppercase text-violet font-medium mb-4">Starter</p>
           <h3 class="font-display text-2xl mb-2">스타터형</h3>
@@ -619,7 +624,7 @@
         <p class="text-ink/60 text-sm sm:text-base">고객님의 입장에서 쉽게 제작 과정을 풀어봤어요.</p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger reveal-cols-3">
         <div class="bg-violet/[0.12] rounded-2xl p-6 text-center">
           <svg aria-hidden="true" class="w-8 h-8 text-violet mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" /></svg>
           <p class="font-display text-base mb-1">문의 및 상담</p>
