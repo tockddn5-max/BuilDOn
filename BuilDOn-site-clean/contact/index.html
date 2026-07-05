@@ -71,6 +71,26 @@
   .modal-hidden .modal-backdrop { opacity: 0; }
   .modal-hidden .modal-card { opacity: 0; transform: translateY(12px); }
   .privacy-body { scrollbar-width: thin; }
+
+  /* 좌측 안내문 — 단어 중간 줄바꿈 방지, 데스크톱 2줄 유지 */
+  .contact-desc {
+    max-width: 620px;
+    margin-top: 26px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: #B7BACB;
+    word-break: keep-all;
+    overflow-wrap: normal;
+  }
+  .contact-desc span { display: block; }
+  /* 좌우 여백이 넉넉한 데스크톱에서만 2번째 줄을 한 줄로 고정 */
+  @media (min-width: 1280px) {
+    .contact-desc span:last-child { white-space: nowrap; }
+  }
+  /* 모바일: 폰트를 줄여 단어 중간 깨짐 방지(keep-all과 함께 항상 어절 단위로만 줄바꿈) */
+  @media (max-width: 480px) {
+    .contact-desc { font-size: 14px; }
+  }
 </style>
 </head>
 <body class="text-cream antialiased" style="background:
@@ -96,12 +116,12 @@
         <div class="lg:sticky lg:top-28">
           <p class="text-mint text-xs tracking-[0.28em] uppercase font-medium mb-5">Contact</p>
           <h1 class="font-display text-cream text-3xl sm:text-4xl lg:text-5xl leading-tight mb-8">프로젝트 의뢰</h1>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-7 mb-6">
+          <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-7">
             <p class="text-cream text-base sm:text-xl font-medium leading-relaxed whitespace-nowrap">📌 어떤 홈페이지를 만들고 싶은가요?</p>
           </div>
-          <p class="text-creamMuted text-sm sm:text-base leading-relaxed max-w-sm">
-            우측에서 의뢰 내용을 작성해주세요.<br>
-            영업일 기준 1일 이내에 안내서와 견적서를 함께 보내드립니다.
+          <p class="contact-desc">
+            <span>우측에서 의뢰 내용을 작성해주세요.</span>
+            <span>영업일 기준 1일 이내에 안내서와 견적서를 함께 보내드립니다.</span>
           </p>
         </div>
 
