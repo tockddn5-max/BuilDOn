@@ -25,7 +25,7 @@
 </script>
 <style>
   html { scroll-behavior: smooth; }
-  body { font-family: '"Pretendard Variable"', sans-serif; background-color: #07111f; }
+  body { font-family: '"Pretendard Variable"', sans-serif; background-color: #FFFFFF; }
   .font-display { font-weight: 700; letter-spacing: -0.02em; }
 
   .btn-primary {
@@ -34,24 +34,24 @@
     box-shadow: 0 20px 40px -14px rgba(109,40,217,0.45), 0 8px 20px -10px rgba(17,19,28,0.35);
   }
   .btn-primary:hover { background-color: #5B21B6; transform: scale(1.03); }
-  .btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(109,40,217,0.5), 0 0 0 5px #07111f; }
+  .btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(109,40,217,0.5), 0 0 0 5px #ffffff; }
   .btn-primary:active { transform: scale(0.98); }
   .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
 
   .btn-ghost {
-    background-color: transparent; color: #B7BACB; border: 1px solid rgba(246,243,236,0.20);
+    background-color: transparent; color: #4A4F5E; border: 1px solid rgba(10,15,26,0.18);
     transition: border-color 180ms ease-out, color 180ms ease-out, background-color 180ms ease-out;
   }
-  .btn-ghost:hover { border-color: rgba(246,243,236,0.4); color: #F6F3EC; }
-  .btn-ghost:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(246,243,236,0.15); }
+  .btn-ghost:hover { border-color: rgba(10,15,26,0.4); color: #0A0F1A; }
+  .btn-ghost:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(10,15,26,0.12); }
 
   .field {
-    background-color: rgba(246,243,236,0.05); border: 1px solid rgba(246,243,236,0.16); color: #F6F3EC;
+    background-color: rgba(10,15,26,0.03); border: 1px solid rgba(10,15,26,0.14); color: #0A0F1A;
     transition: border-color 150ms ease-out, background-color 150ms ease-out, box-shadow 150ms ease-out;
   }
-  .field::placeholder { color: #6B7180; }
-  .field:hover { border-color: rgba(246,243,236,0.30); }
-  .field:focus { outline: none; border-color: #A78BFA; box-shadow: 0 0 0 3px rgba(109,40,217,0.28); background-color: rgba(246,243,236,0.08); }
+  .field::placeholder { color: #6B7280; }
+  .field:hover { border-color: rgba(10,15,26,0.26); }
+  .field:focus { outline: none; border-color: #6D28D9; box-shadow: 0 0 0 3px rgba(109,40,217,0.20); background-color: #ffffff; }
   .field.invalid { border-color: #F87171; box-shadow: 0 0 0 3px rgba(248,113,113,0.18); }
   select.field option { color: #11131C; }
 
@@ -78,7 +78,7 @@
     margin-top: 26px;
     font-size: 16px;
     line-height: 1.65;
-    color: #B7BACB;
+    color: rgba(10,15,26,0.62);
     word-break: keep-all;
     overflow-wrap: normal;
   }
@@ -93,18 +93,18 @@
   }
 </style>
 </head>
-<body class="text-cream antialiased" style="background:
-    radial-gradient(circle at 82% 12%, rgba(109,40,217,0.28), transparent 42%),
-    radial-gradient(circle at 8% 88%, rgba(51,214,166,0.10), transparent 40%),
-    #07111f;">
+<body class="text-ink antialiased" style="background:
+    radial-gradient(circle at 82% 12%, rgba(109,40,217,0.07), transparent 42%),
+    radial-gradient(circle at 8% 88%, rgba(51,214,166,0.06), transparent 40%),
+    #FFFFFF;">
 
   <!-- Header -->
-  <header class="fixed top-0 inset-x-0 z-40 bg-[#07111f]/85 backdrop-blur border-b border-white/8">
+  <header class="fixed top-0 inset-x-0 z-40 bg-white/85 backdrop-blur border-b border-ink/8">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
-      <a href="/" class="flex items-center gap-2" aria-label="BuildOn 홈으로">
-        <span class="font-display text-cream text-xl">Build<span class="text-violet-light">On</span></span>
+      <a href="/" class="flex items-center" aria-label="BuildOn 홈으로">
+        <img src="/brand_logo/새로고-transparent.png" alt="BuildOn" class="h-9 w-auto">
       </a>
-      <a href="/" class="text-creamMuted text-sm hover:text-cream transition-colors">← 홈으로</a>
+      <a href="/" class="text-ink/60 text-sm hover:text-ink transition-colors">← 홈으로</a>
     </div>
   </header>
 
@@ -114,10 +114,10 @@
 
         <!-- LEFT: 안내 -->
         <div class="lg:sticky lg:top-28">
-          <p class="text-mint text-xs tracking-[0.28em] uppercase font-medium mb-5">Contact</p>
-          <h1 class="font-display text-cream text-3xl sm:text-4xl lg:text-5xl leading-tight mb-8">프로젝트 의뢰</h1>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-7">
-            <p class="text-cream text-base sm:text-xl font-medium leading-relaxed whitespace-nowrap">📌 어떤 홈페이지를 만들고 싶은가요?</p>
+          <p class="text-mint-dark text-xs tracking-[0.28em] uppercase font-medium mb-5">Contact</p>
+          <h1 class="font-display text-ink text-3xl sm:text-4xl lg:text-5xl leading-tight mb-8">프로젝트 의뢰</h1>
+          <div class="rounded-2xl border border-ink/10 bg-ink/[0.03] p-6 sm:p-7">
+            <p class="text-ink text-base sm:text-xl font-medium leading-relaxed whitespace-nowrap">📌 어떤 홈페이지를 만들고 싶은가요?</p>
           </div>
           <p class="contact-desc">
             <span>우측에서 의뢰 내용을 작성해주세요.</span>
@@ -126,14 +126,14 @@
         </div>
 
         <!-- RIGHT: 폼 -->
-        <div class="rounded-[1.75rem] border border-white/10 bg-white/[0.035] p-6 sm:p-9 lg:p-10 shadow-2xl shadow-black/30">
+        <div class="rounded-[1.75rem] border border-ink/8 bg-white p-6 sm:p-9 lg:p-10 shadow-2xl shadow-ink/10">
           <!-- step indicator -->
           <div class="mb-8">
             <div class="flex items-center justify-between text-sm mb-3">
-              <span id="ind-1" class="step-dot font-medium text-cream">01 기본 정보</span>
-              <span id="ind-2" class="step-dot font-medium text-creamMuted/60">02 추가정보</span>
+              <span id="ind-1" class="step-dot font-medium text-ink">01 기본 정보</span>
+              <span id="ind-2" class="step-dot font-medium text-ink/60">02 추가정보</span>
             </div>
-            <div class="h-1 rounded-full bg-white/10 overflow-hidden">
+            <div class="h-1 rounded-full bg-ink/10 overflow-hidden">
               <div id="step-line" class="step-line-fill h-full rounded-full bg-violet" style="width:50%"></div>
             </div>
           </div>
@@ -143,34 +143,34 @@
               <!-- STEP 01 -->
               <section id="step-1" class="form-step active" aria-label="기본 정보">
                 <div class="mb-7">
-                  <p class="text-violet-light font-display text-2xl">01</p>
-                  <h2 class="font-display text-cream text-xl sm:text-2xl mt-1 mb-2">기본 정보</h2>
-                  <p class="text-creamMuted text-sm">문의사항 회신을 위한 기본 정보를 알려주세요.</p>
+                  <p class="text-violet font-display text-2xl">01</p>
+                  <h2 class="font-display text-ink text-xl sm:text-2xl mt-1 mb-2">기본 정보</h2>
+                  <p class="text-ink/60 text-sm">문의사항 회신을 위한 기본 정보를 알려주세요.</p>
                 </div>
 
                 <div class="space-y-5">
                   <div>
-                    <label for="company" class="block text-cream/80 text-sm mb-2">회사 / 단체명</label>
+                    <label for="company" class="block text-ink/70 text-sm mb-2">회사 / 단체명</label>
                     <input id="company" name="company" type="text" required placeholder="회사명을 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
-                    <p class="err hidden text-rose-300 text-xs mt-1.5"></p>
+                    <p class="err hidden text-rose-600 text-xs mt-1.5"></p>
                   </div>
                   <div>
-                    <label for="name" class="block text-cream/80 text-sm mb-2">직책 / 성함</label>
+                    <label for="name" class="block text-ink/70 text-sm mb-2">직책 / 성함</label>
                     <input id="name" name="name" type="text" required placeholder="직책 및 성함을 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
-                    <p class="err hidden text-rose-300 text-xs mt-1.5"></p>
+                    <p class="err hidden text-rose-600 text-xs mt-1.5"></p>
                   </div>
                   <div>
-                    <label for="phone" class="block text-cream/80 text-sm mb-2">연락처</label>
+                    <label for="phone" class="block text-ink/70 text-sm mb-2">연락처</label>
                     <input id="phone" name="phone" type="tel" required placeholder="연락처를 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
-                    <p class="err hidden text-rose-300 text-xs mt-1.5"></p>
+                    <p class="err hidden text-rose-600 text-xs mt-1.5"></p>
                   </div>
                   <div>
-                    <label for="email" class="block text-cream/80 text-sm mb-2">이메일</label>
+                    <label for="email" class="block text-ink/70 text-sm mb-2">이메일</label>
                     <input id="email" name="email" type="email" required placeholder="이메일을 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
-                    <p class="err hidden text-rose-300 text-xs mt-1.5"></p>
+                    <p class="err hidden text-rose-600 text-xs mt-1.5"></p>
                   </div>
                   <div>
-                    <label for="intro" class="block text-cream/80 text-sm mb-2">회사 및 비즈니스 간단 소개</label>
+                    <label for="intro" class="block text-ink/70 text-sm mb-2">회사 및 비즈니스 간단 소개</label>
                     <textarea id="intro" name="intro" rows="4" placeholder="회사 및 비즈니스를 소개해주세요." class="field w-full rounded-xl px-4 py-3 text-sm resize-none" style="min-height:120px"></textarea>
                   </div>
                 </div>
@@ -183,14 +183,14 @@
               <!-- STEP 02 -->
               <section id="step-2" class="form-step" aria-label="추가정보">
                 <div class="mb-7">
-                  <p class="text-violet-light font-display text-2xl">02</p>
-                  <h2 class="font-display text-cream text-xl sm:text-2xl mt-1 mb-2">추가정보</h2>
-                  <p class="text-creamMuted text-sm">프로젝트 진행에 필요한 추가 내용을 알려주세요.</p>
+                  <p class="text-violet font-display text-2xl">02</p>
+                  <h2 class="font-display text-ink text-xl sm:text-2xl mt-1 mb-2">추가정보</h2>
+                  <p class="text-ink/60 text-sm">프로젝트 진행에 필요한 추가 내용을 알려주세요.</p>
                 </div>
 
                 <div class="space-y-5">
                   <div>
-                    <label for="budget" class="block text-cream/80 text-sm mb-2">사용 가능한 예산</label>
+                    <label for="budget" class="block text-ink/70 text-sm mb-2">사용 가능한 예산</label>
                     <select id="budget" name="budget" class="field w-full rounded-xl px-4 h-12 text-sm">
                       <option value="미정" selected>미정</option>
                       <option value="100만 원 이하">100만 원 이하</option>
@@ -200,22 +200,22 @@
                     </select>
                   </div>
                   <div>
-                    <label for="refUrl" class="block text-cream/80 text-sm mb-2">참고하고 싶은 홈페이지 URL</label>
+                    <label for="refUrl" class="block text-ink/70 text-sm mb-2">참고하고 싶은 홈페이지 URL</label>
                     <input id="refUrl" name="refUrl" type="text" placeholder="URL을 입력해주세요." class="field w-full rounded-xl px-4 h-12 text-sm">
                   </div>
                   <div>
-                    <label for="reason" class="block text-cream/80 text-sm mb-2">BuildOn에게 의뢰주신 이유</label>
+                    <label for="reason" class="block text-ink/70 text-sm mb-2">BuildOn에게 의뢰주신 이유</label>
                     <textarea id="reason" name="reason" rows="4" placeholder="자유롭게 작성해주세요." class="field w-full rounded-xl px-4 py-3 text-sm resize-none" style="min-height:120px"></textarea>
                   </div>
 
                   <div class="pt-1">
                     <label class="flex items-start gap-3 cursor-pointer select-none">
-                      <input id="agree" name="agree" type="checkbox" class="mt-0.5 h-5 w-5 rounded border-white/30 bg-transparent accent-violet cursor-pointer">
-                      <span class="text-sm text-cream/85">개인정보 수집 및 이용에 동의합니다.
-                        <button type="button" id="open-privacy" class="ml-1 underline text-violet-light hover:text-cream transition-colors">보기</button>
+                      <input id="agree" name="agree" type="checkbox" class="mt-0.5 h-5 w-5 rounded border-ink/30 bg-transparent accent-violet cursor-pointer">
+                      <span class="text-sm text-ink/80">개인정보 수집 및 이용에 동의합니다.
+                        <button type="button" id="open-privacy" class="ml-1 underline text-violet hover:text-ink transition-colors">보기</button>
                       </span>
                     </label>
-                    <p id="agree-err" class="hidden text-rose-300 text-xs mt-2">개인정보 수집 및 이용에 동의해주세요.</p>
+                    <p id="agree-err" class="hidden text-rose-600 text-xs mt-2">개인정보 수집 및 이용에 동의해주세요.</p>
                   </div>
                 </div>
 
@@ -232,8 +232,8 @@
             <div class="mx-auto mb-5 h-14 w-14 rounded-full bg-mint/15 flex items-center justify-center">
               <svg class="w-7 h-7 text-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
-            <h2 class="font-display text-cream text-xl mb-2">문의가 접수되었습니다.</h2>
-            <p class="text-creamMuted text-sm">영업일 기준 1일 이내에 안내드리겠습니다.</p>
+            <h2 class="font-display text-ink text-xl mb-2">문의가 접수되었습니다.</h2>
+            <p class="text-ink/60 text-sm">영업일 기준 1일 이내에 안내드리겠습니다.</p>
             <a href="/" class="inline-block mt-7"><button class="btn-ghost px-6 h-11 rounded-full text-sm font-medium">홈으로 돌아가기</button></a>
           </div>
         </div>
@@ -296,8 +296,8 @@
       function setStep(n) {
         step1.classList.toggle('active', n === 1);
         step2.classList.toggle('active', n === 2);
-        ind1.className = 'step-dot font-medium ' + (n === 1 ? 'text-cream' : 'text-creamMuted/60');
-        ind2.className = 'step-dot font-medium ' + (n === 2 ? 'text-cream' : 'text-creamMuted/60');
+        ind1.className = 'step-dot font-medium ' + (n === 1 ? 'text-ink' : 'text-ink/60');
+        ind2.className = 'step-dot font-medium ' + (n === 2 ? 'text-ink' : 'text-ink/60');
         line.style.width = n === 1 ? '50%' : '100%';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
