@@ -239,6 +239,7 @@
                   <button type="button" id="to-step-1" class="btn-ghost w-full sm:w-auto px-6 h-12 rounded-full text-sm font-medium">이전</button>
                   <button type="submit" id="submit-btn" class="btn-primary w-full sm:w-auto px-8 h-12 rounded-full text-sm font-medium">제출하기</button>
                 </div>
+                <p id="submit-feedback" class="hidden mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm leading-relaxed text-rose-700" role="alert" aria-live="polite"></p>
               </section>
             </div>
           </form>
@@ -374,16 +375,50 @@
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
       agree.addEventListener('change', function () { if (agree.checked) agreeErr.classList.add('hidden'); });
 
-      // 제출 — 기존 Supabase + /api/notify 로직 재사용(필드 매핑), 실패해도 UX 방어
+      // 제출 — 기존 payload 구조를 유지하되 저장과 알림 성공을 모두 확인한 뒤 완료 처리
       var SUPABASE_URL = 'https://qbcymytrarkgrukkafab.supabase.co';
       var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_dQ-a4sXaC8VyXT8UtxRY3g_gJDBlBuA';
       var submitBtn = document.getElementById('submit-btn');
+      var submitFeedback = document.getElementById('submit-feedback');
+      var submitBtnDefaultText = submitBtn.textContent;
+
+      function showSubmitFeedback(message) {
+        submitFeedback.textContent = message;
+        submitFeedback.classList.remove('hidden');
+      }
+      function clearSubmitFeedback() {
+        submitFeedback.textContent = '';
+        submitFeedback.classList.add('hidden');
+      }
+      function setSubmitting(isSubmitting) {
+        submitBtn.disabled = isSubmitting;
+        submitBtn.textContent = isSubmitting ? '제출 중...' : submitBtnDefaultText;
+      }
+      async function saveConsultation(payload) {
+        if (!window.supabase || !supabase.createClient) {
+          throw new Error('Supabase client unavailable');
+        }
+        var client = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+        var result = await client.from('consultations').insert(payload);
+        if (result.error) throw result.error;
+      }
+      async function sendNotification(payload) {
+        var response = await fetch('/api/notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) {
+          throw new Error('Notification failed: ' + response.status);
+        }
+      }
 
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
         if (!validateStep1()) { setStep(1); return; }
         if (!agree.checked) { agreeErr.classList.remove('hidden'); return; }
-        submitBtn.disabled = true;
+        clearSubmitFeedback();
+        setSubmitting(true);
 
         var g = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
         var message =
@@ -394,14 +429,15 @@
           '[의뢰 사유] ' + g('reason');
         var payload = { name: g('name'), phone: g('phone'), email: g('email'), message: message };
 
-        // 저장·알림은 백그라운드 처리 — 접수 안내는 즉시 확정(네트워크에 막히지 않음)
         try {
-          if (window.supabase && supabase.createClient) {
-            var client = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-            client.from('consultations').insert(payload).then(function () {}, function () {});
-          }
-        } catch (err) { /* 저장 실패해도 접수 안내는 진행 */ }
-        fetch('/api/notify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function () {});
+          await saveConsultation(payload);
+          await sendNotification(payload);
+        } catch (err) {
+          console.error('Contact submit failed:', err);
+          showSubmitFeedback('접수 확인이 지연되고 있습니다. 네트워크 상태를 확인한 뒤 잠시 후 다시 시도해 주세요.');
+          setSubmitting(false);
+          return;
+        }
 
         form.classList.add('hidden');
         document.querySelector('.steps-wrap') && (document.querySelector('.steps-wrap').style.display = 'none');
