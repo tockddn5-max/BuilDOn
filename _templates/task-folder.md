@@ -2,6 +2,8 @@
 
 새 작업 시작 시 이 가이드대로 폴더와 파일을 생성한다.
 
+> 예외: BuilDOn 홈페이지 기존 사이트 수정 작업은 일반 `tasks/<task-name>/`가 아니라 `HOMEPAGE-GUIDE.md`의 "Revision Auto-Workflow"를 따른다. revision 문서는 반드시 `BuilDOn-site-clean/tasks/<revision-id>/`에 생성하고, repo 루트 `tasks/` 또는 repo 밖 `buildon 수정/tasks/`에는 만들지 않는다.
+
 ## 폴더 구조
 
 ```
@@ -22,6 +24,8 @@ tasks/<task-name>/
 ## 생성 절차
 
 ### Step 1: 작업 폴더 + 필수 파일
+
+일반 멀티에이전트 작업은 아래 구조를 사용한다. BuilDOn 홈페이지 revision 작업이면 이 절차를 사용하지 말고 `BuilDOn-site-clean/tasks/<revision-id>/`에 revision 문서 8종을 만든다.
 
 ```bash
 TASK=my-task-name

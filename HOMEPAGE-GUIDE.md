@@ -20,6 +20,166 @@ Phase 5: 관리자 페이지 (선택)   — 담당: codex-main → codex-critic 
 
 ---
 
+# Revision Auto-Workflow (BuilDOn 홈페이지 수정)
+
+기존 BuilDOn 사이트를 수정하는 작업은 신규 제작 Phase가 아니라 revision lifecycle로 진행한다. revision-001은 완료되었고, 다음 새 수정은 `homepage-revision-buildon-002`부터 시작한다.
+
+## 0. Revision ID 생성
+
+1. `BuilDOn-site-clean/tasks/` 아래 기존 `homepage-revision-buildon-###` 폴더를 확인한다.
+2. 가장 큰 번호의 다음 번호를 사용한다.
+3. 작업 폴더는 반드시 `BuilDOn-site-clean/tasks/<revision-id>/`에 만든다.
+
+금지 경로:
+
+- repo 밖 `buildon 수정/tasks/...`
+- repo 루트 `tasks/...`
+- `.gitignore`에 걸리는 경로
+
+예:
+
+```text
+BuilDOn-site-clean/tasks/homepage-revision-buildon-002/
+BuilDOn-site-clean/tasks/homepage-revision-buildon-003/
+```
+
+## 1. 시작 시 자동 생성 문서
+
+새 revision 시작 시 아래 8개 문서를 생성한다.
+
+```text
+01_revision-request.md
+02_scope-and-rules.md
+03_current-code-state.md
+04_codex-main-revision-plan.md
+05_risk-and-verification.md
+06_change-log.md
+07_final-revision-brief.md
+08_post-change-verification.md
+```
+
+## 2. 수정 전 필수 기록
+
+실제 사이트 파일을 수정하기 전에 아래 항목을 문서화한다.
+
+- 사용자 요청 원문
+- 수정 목표
+- 수정 허용 파일
+- 수정 금지 파일
+- 기능/API/배포/에셋 리스크 여부
+- 예상 변경 파일
+- 검증 기준
+- rollback 기준
+
+예상 변경 파일 목록을 사용자에게 보고하기 전에는 사이트 파일을 수정하지 않는다.
+
+## 3. 수정 전 중단 조건
+
+아래 항목은 명확한 요청과 별도 범위가 없으면 즉시 중단하고 별도 revision 후보로 분리한다.
+
+- `api/notify.js` 등 서버/API 로직
+- `vercel.json` 등 배포 설정
+- 관리자 화면/관리자 경로
+- 이미지/영상/로고 에셋 교체
+- `package.json`, lock 파일, 의존성 변경
+- 환경변수 변경
+- 보안 헤더/CSP 변경
+
+## 4. 수정 후 검증
+
+수정 후 아래를 확인하고 `08_post-change-verification.md`에 기록한다.
+
+```bash
+git diff --name-only
+git diff --check
+```
+
+검증 항목:
+
+- 허용 파일 외 변경 여부
+- 금지 파일 변경 여부
+- 모바일 390px 기준 핵심 화면 확인
+- 데스크톱 1280px 기준 핵심 화면 확인
+- 운영 반영 전 로컬 검증 결과
+
+## 5. 사이트 수정 커밋
+
+사이트 수정 커밋은 수정 파일만 선별 add한다.
+
+금지:
+
+- `git add .`
+- 전체 untracked add
+- 무관 파일 커밋
+
+커밋 메시지는 작업 성격에 맞게 작성한다.
+
+예:
+
+- `Refine homepage and contact revision copy`
+- `Fix contact form payload mapping`
+- `Improve mobile contact form flow`
+
+## 6. Push 및 배포 확인
+
+push 전 확인:
+
+- 현재 브랜치
+- HEAD 커밋
+- 미커밋 tracked 변경 없음
+
+push 후 확인:
+
+- 원격 `main` 반영 커밋
+- Vercel 배포 완료 여부
+- 운영 URL 반영 여부
+- 4xx 리소스 여부
+
+## 7. 문서 마감
+
+배포 확인 후 아래 문서를 완료 상태로 갱신한다.
+
+- `07_final-revision-brief.md`
+- `08_post-change-verification.md`
+
+반드시 기록할 것:
+
+- 사이트 수정 커밋 해시
+- push 여부
+- 배포 완료 시각
+- 운영 URL
+- 운영 검증 결과
+- 추가 수정 필요 여부
+- 다음 revision 후보
+
+문서 마감 후 문서 파일만 별도 커밋한다.
+
+```bash
+git add BuilDOn-site-clean/tasks/<revision-id>/07_final-revision-brief.md \
+        BuilDOn-site-clean/tasks/<revision-id>/08_post-change-verification.md
+git commit -m "docs: finalize <revision-id> verification"
+```
+
+## 8. 다음 revision 자동 제안
+
+완료 후 범위 밖 항목을 다음 revision 후보로 정리한다.
+
+예:
+
+- `homepage-revision-buildon-002`: Contact form payload and `/api/notify` consistency check
+- `homepage-revision-buildon-003`: Admin route and access review
+- `homepage-revision-buildon-004`: Asset optimization
+
+## Revision-001 기준 완료 기록
+
+- 사이트 수정 커밋: `01bab3a9a51c715c9cd076c870b4d0760efc2596`
+- 문서 마감 커밋: `f2069f1f328b5009ab8fbd007ee6e24bba6d3f91`
+- 원격 `main` push 완료
+- Vercel 운영 배포 확인 완료
+- 다음 revision 기본값: `homepage-revision-buildon-002`
+
+---
+
 # Phase 1: 기획 (인터뷰)
 
 **담당**: Orchestrator(이 세션)가 `AskUserQuestion`으로 **직접** 진행한다. claude-main은 one-shot/headless 워커라 실시간 대화 채널이 없으므로 인터뷰 자체를 맡기지 않는다 (`CLAUDE.md` "BuilDOn 홈페이지 제작 프로세스" 참조). 인터뷰 결과는 `context.md`에 기록한 뒤, 필요 시 claude-main에게 "이 결과를 기반으로 섹션 구조·카피 방향을 설계"하는 브리프로 넘긴다 (승인 필요).

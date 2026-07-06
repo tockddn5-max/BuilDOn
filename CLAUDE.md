@@ -27,6 +27,18 @@ Phase 5: 관리자 페이지(선택) → codex-main → codex-critic (보안 리
 
 **각 Phase 완료 후 사용자에게 확인받고 다음 Phase로 진행한다.**
 
+### BuilDOn 홈페이지 수정 revision lifecycle
+
+BuilDOn 홈페이지의 기존 사이트를 수정하는 요청은 신규 제작 Phase와 분리해 **revision 단위**로 운영한다. 상세 절차와 체크리스트는 `HOMEPAGE-GUIDE.md`의 "Revision Auto-Workflow"가 정본이다.
+
+- 새 revision은 기존 `homepage-revision-buildon-###` 폴더를 확인한 뒤 다음 번호를 사용한다. revision-001은 완료되었으므로 다음 기본값은 `homepage-revision-buildon-002`다.
+- revision 작업 문서는 반드시 `BuilDOn-site-clean/tasks/<revision-id>/` 아래에 만든다.
+- 금지 경로: repo 밖 `buildon 수정/tasks/...`, repo 루트 `tasks/...`, `.gitignore`에 걸리는 경로.
+- 시작 시 revision 문서 8종을 만들고, 수정 전 요청 원문·범위·허용/금지 파일·예상 변경 파일·검증/롤백 기준을 먼저 기록한다.
+- API, 배포 설정, 관리자 경로, 에셋, 의존성, 환경변수, 보안 헤더/CSP 변경은 명확한 요청과 별도 범위가 없으면 실제 수정 전 중단하고 별도 revision 후보로 분리한다.
+- 사이트 수정 커밋과 문서 마감 커밋은 분리한다. `git add .` 금지, 허용 파일만 선별 add한다.
+- push/Vercel 배포 확인 후 `07_final-revision-brief.md`, `08_post-change-verification.md`를 완료 상태로 갱신하고 문서만 별도 커밋한다.
+
 ### Phase 1 담당 원칙 (중요 — one-shot 워커 제약과 직결)
 
 `HOMEPAGE-GUIDE.md`의 "고객 인터뷰"는 **claude-main이 아니라 Orchestrator(이 세션)가 `AskUserQuestion`으로 직접 수행**한다. claude-main은 `_templates/worker-brief.md` 고정 블록에 명시된 대로 one-shot/headless 워커라 사용자와의 실시간 대화 채널이 없기 때문이다(승인·쿼터 대상도 아님 — 내부 추론).

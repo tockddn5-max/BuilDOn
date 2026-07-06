@@ -24,3 +24,12 @@
 ## 홈페이지 제작 절차·품질 기준
 
 Phase별 절차, 인터뷰 질문표, 안티-제너릭 가드레일, Supabase/Resend/Vercel 연동, 보안 체크리스트는 `HOMEPAGE-GUIDE.md` 참조.
+
+## BuilDOn 홈페이지 revision 작업 규칙
+
+- 기존 BuilDOn 홈페이지 수정 요청은 `HOMEPAGE-GUIDE.md`의 "Revision Auto-Workflow"를 따른다.
+- revision 문서는 반드시 `BuilDOn-site-clean/tasks/<revision-id>/`에 생성한다. repo 밖 `buildon 수정/tasks/...`, repo 루트 `tasks/...`, `.gitignore` 대상 경로는 금지한다.
+- 새 revision은 기존 `homepage-revision-buildon-###` 폴더를 확인해 다음 번호를 사용한다. revision-001은 완료되었으므로 다음 기본값은 `homepage-revision-buildon-002`다.
+- 실제 사이트 파일 수정 전, revision 문서에 요청 원문·수정 목표·허용/금지 파일·예상 변경 파일·검증 기준·롤백 기준을 먼저 기록한다.
+- API/배포 설정/관리자 경로/에셋/의존성/환경변수/보안 헤더 변경은 별도 revision 후보로 분리한다.
+- 커밋이 필요한 경우 `git add .`를 쓰지 말고 허용 파일만 선별 stage한다. 사이트 수정 커밋과 문서 마감 커밋은 분리한다.
