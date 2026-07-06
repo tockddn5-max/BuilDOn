@@ -83,13 +83,18 @@
     overflow-wrap: normal;
   }
   .contact-desc > span { display: block; }
+  .contact-card { width: 100%; max-width: 100%; overflow: hidden; box-sizing: border-box; }
   /* 좌우 여백이 넉넉한 데스크톱에서만 2번째 줄을 한 줄로 고정 */
   @media (min-width: 1280px) {
     .contact-desc > span:last-child { white-space: nowrap; }
   }
   /* 모바일: 폰트를 줄여 단어 중간 깨짐 방지(keep-all과 함께 항상 어절 단위로만 줄바꿈) */
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     .contact-desc { font-size: 15px; }
+    .contact-card { max-width: calc(100vw - 48px); }
+    .contact-prompt { white-space: normal; word-break: keep-all; }
+    .privacy-consent { align-items: flex-start; }
+    .privacy-consent-text { display: block; line-height: 1.6; word-break: keep-all; }
   }
 
   /* 진입 애니메이션 — 로드 시 각 요소가 자연스럽게 나타남 */
@@ -124,11 +129,11 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
         <!-- LEFT: 안내 -->
-        <div class="lg:sticky lg:top-28">
+        <div class="min-w-0 lg:sticky lg:top-28">
           <p class="anim-rise inline-block bg-mint/[0.25] text-[#157A5E] text-xs tracking-[0.28em] uppercase font-medium px-3 py-1 rounded-full mb-5">Contact</p>
           <h1 class="anim-drop font-display text-ink text-3xl sm:text-4xl lg:text-5xl leading-tight mb-8" style="animation-delay:120ms">프로젝트 의뢰</h1>
           <div class="anim-rise rounded-2xl border border-ink/10 bg-ink/[0.03] p-6 sm:p-7" style="animation-delay:220ms">
-            <p class="text-ink text-base sm:text-xl font-medium leading-relaxed whitespace-nowrap">📌 어떤 홈페이지를 만들고 싶은가요?</p>
+            <p class="contact-prompt text-ink text-base sm:text-xl font-medium leading-relaxed sm:whitespace-nowrap">📌 어떤 홈페이지를 만들고 싶은가요?</p>
           </div>
           <p class="contact-desc anim-rise" style="animation-delay:320ms">
             <span>우측에서 의뢰 내용을 작성해주세요.</span>
@@ -137,12 +142,12 @@
         </div>
 
         <!-- RIGHT: 폼 -->
-        <div class="anim-rise rounded-[1.75rem] border border-ink/8 bg-white p-6 sm:p-9 lg:p-10 shadow-2xl shadow-ink/10" style="animation-delay:200ms">
+        <div class="contact-card anim-rise min-w-0 rounded-[1.75rem] border border-ink/8 bg-white p-6 sm:p-9 lg:p-10 shadow-2xl shadow-ink/10" style="animation-delay:200ms">
           <!-- step indicator -->
           <div class="mb-8">
-            <div class="flex items-center justify-between text-sm mb-3">
-              <span id="ind-1" class="step-dot font-medium text-ink">01 기본 정보</span>
-              <span id="ind-2" class="step-dot font-medium text-ink/60">02 추가정보</span>
+            <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm mb-3">
+              <span id="ind-1" class="step-dot font-medium text-ink whitespace-nowrap">01 기본 정보</span>
+              <span id="ind-2" class="step-dot font-medium text-ink/60 whitespace-nowrap text-right">02 추가정보</span>
             </div>
             <div class="h-1 rounded-full bg-ink/10 overflow-hidden">
               <div id="step-line" class="step-line-fill h-full rounded-full bg-violet" style="width:50%"></div>
@@ -220,9 +225,9 @@
                   </div>
 
                   <div class="pt-1">
-                    <label class="flex items-start gap-3 cursor-pointer select-none">
+                    <label class="privacy-consent flex items-start gap-3 cursor-pointer select-none">
                       <input id="agree" name="agree" type="checkbox" class="mt-0.5 h-5 w-5 rounded border-ink/30 bg-transparent accent-violet cursor-pointer">
-                      <span class="text-sm text-ink/80">개인정보 수집 및 이용에 동의합니다.
+                      <span class="privacy-consent-text text-sm text-ink/80">개인정보 수집 및 이용에 동의합니다.
                         <button type="button" id="open-privacy" class="ml-1 underline text-violet hover:text-ink transition-colors">보기</button>
                       </span>
                     </label>
@@ -307,8 +312,8 @@
       function setStep(n) {
         step1.classList.toggle('active', n === 1);
         step2.classList.toggle('active', n === 2);
-        ind1.className = 'step-dot font-medium ' + (n === 1 ? 'text-ink' : 'text-ink/60');
-        ind2.className = 'step-dot font-medium ' + (n === 2 ? 'text-ink' : 'text-ink/60');
+        ind1.className = 'step-dot font-medium whitespace-nowrap ' + (n === 1 ? 'text-ink' : 'text-ink/60');
+        ind2.className = 'step-dot font-medium whitespace-nowrap text-right ' + (n === 2 ? 'text-ink' : 'text-ink/60');
         line.style.width = n === 1 ? '50%' : '100%';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
