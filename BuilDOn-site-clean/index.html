@@ -770,8 +770,10 @@
     }
     window.scrollTo(0, 0);
 
-    // smooth scroll (Lenis) — 모션 감소 설정 시 네이티브 스크롤 유지
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof Lenis !== 'undefined') {
+    // smooth scroll (Lenis) — 모션 감소 설정 시, 그리고 모바일(터치) 기기에서는 네이티브 스크롤 유지
+    // 모바일에서 Lenis가 터치 스크롤을 가로채 스크롤이 멈추는 문제를 방지한다.
+    var _isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !_isTouchDevice && typeof Lenis !== 'undefined') {
       const lenis = new Lenis({
         duration: 0.9,
         easing: (t) => 1 - Math.pow(1 - t, 3),
