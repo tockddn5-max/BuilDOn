@@ -262,15 +262,16 @@
   </a>
 
   <!-- ===================== HERO ===================== -->
-  <section id="top" class="relative min-h-[92vh] flex items-center bg-ink overflow-hidden">
-    <div class="absolute inset-0" style="background:
+  <section id="top" class="relative flex flex-col md:flex-row md:items-center bg-mist md:bg-ink overflow-hidden pt-20 md:pt-0 md:min-h-[92vh]">
+    <!-- desktop dark radial background -->
+    <div class="hidden md:block absolute inset-0" style="background:
         radial-gradient(circle at 80% 30%, rgba(109,40,217,0.35), transparent 45%),
         radial-gradient(circle at 95% 75%, rgba(51,214,166,0.16), transparent 40%),
         #11131C;">
     </div>
 
-    <!-- hero background video (replaces decorative marquee mockups) -->
-    <div class="absolute inset-0 overflow-hidden">
+    <!-- hero video: 모바일 = 상단 배너(모니터 전체 노출) / 데스크톱 = 전체 배경 -->
+    <div class="relative w-full aspect-video overflow-hidden md:absolute md:inset-0 md:h-full md:aspect-auto">
       <video class="w-full h-full object-cover" autoplay muted loop playsinline preload="metadata"
              aria-label="BuilDOn 홈페이지 제작 과정을 보여주는 히어로 섹션 애니메이션">
         <source src="assets/videos/monitor-elements-animation.webm" type="video/webm">
@@ -278,11 +279,12 @@
       </video>
     </div>
 
-    <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/50 to-ink/30"></div>
+    <!-- 데스크톱 전용: 영상 위 텍스트 가독성용 오버레이 -->
+    <div class="hidden md:block absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/50 to-ink/30"></div>
 
-    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 pt-24 pb-16 w-full text-center">
-      <p class="text-mint tracking-[0.25em] text-xs font-medium mb-6 uppercase">Web Agency BuildOn</p>
-      <h1 class="font-display text-cream leading-[1.15] max-w-3xl mx-auto">
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 pt-8 pb-14 md:pt-24 md:pb-16 w-full text-center">
+      <p class="text-mint-dark md:text-mint tracking-[0.25em] text-xs font-medium mb-6 uppercase">Web Agency BuildOn</p>
+      <h1 class="font-display text-ink md:text-cream leading-[1.15] max-w-3xl mx-auto">
         <span class="inline-block align-middle text-[1.7rem] sm:text-3xl lg:text-4xl">브랜드의 첫인상을 완성하는</span><br>
         <span class="align-middle text-2xl sm:text-3xl lg:text-4xl">홈페이지 제작</span><br>
         <span class="text-4xl sm:text-5xl lg:text-6xl">BuildOn</span>
@@ -294,7 +296,7 @@
         <a href="/contact">
           <button class="btn-primary w-full max-w-[260px] sm:w-auto px-8 py-3.5 rounded-full text-sm font-medium tracking-wide">무료 상담 신청하기</button>
         </a>
-        <a href="#services" class="text-cream/80 text-sm inline-flex items-center gap-2 hover:text-cream transition-colors duration-200">
+        <a href="#services" class="text-ink/70 md:text-cream/80 text-sm inline-flex items-center gap-2 hover:text-ink md:hover:text-cream transition-colors duration-200">
           서비스 살펴보기
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
         </a>
